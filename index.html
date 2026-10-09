@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>محمد صدیق کی شادی — مہمانوں اور اخراجات کا حساب</title>
+<title>Wedding Planner &amp; Calculator</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
@@ -582,6 +582,13 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
 }
 .lg-btn:disabled{opacity:.6}
 .lg-msg{min-height:24px; margin-top:10px; font-size:13px; color:#c62828}
+.lg-links{margin-top:10px; font-size:13.5px; color:#7b3f6e}
+.lg-prev{margin:-4px 0 4px; font-size:14px; min-height:0}
+.lg-prev:empty{display:none}
+/* LTR khano mein Urdu placeholder seedha nazar aaye */
+html:not([lang=en]) input[dir=ltr]:placeholder-shown{direction:rtl}
+.lg-links a{color:#c2185b; font-weight:700; text-decoration:none}
+.lg-links a:hover{text-decoration:underline}
 .user-chip{display:flex; align-items:center; gap:8px; font-size:13px; color:#6a1b9a; font-weight:700}
 .logout-btn{border:0; border-radius:10px; padding:5px 12px; background:#fdeef5; color:#ad1457; font-weight:700; font-size:12px}
 .perm-box{margin-top:12px; padding:12px; border-radius:16px; background:linear-gradient(135deg,#fff3f8,#f6efff); border:1px dashed rgba(171,71,188,.4)}
@@ -607,6 +614,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
   font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif; direction:rtl;
 }
 #welcomeScreen.hide{opacity:0; visibility:hidden}
+#welcomeScreen.wl-wait .wl-card{visibility:hidden}
 .wl-bg,.wl-lights,.wl-garlands{position:absolute; inset:0; pointer-events:none}
 
 /* gulab ki pattiyan */
@@ -723,6 +731,7 @@ html[lang=en] .header h1{line-height:1.4}
   html[lang=en] #printReport{direction:ltr;text-align:left;font-family:Arial,"Noto Nastaliq Urdu",sans-serif}
   html[lang=en] .cutout-card-single{text-align:left}
   .lang-btn{display:none!important}
+  iframe{display:none!important}
 }
 
 /* ================= STYLISH FONTS (sirf screen par, print par asar nahi) ================= */
@@ -758,6 +767,32 @@ html[lang=en] .header h1{line-height:1.4}
 @media screen and (max-width:620px){
   html[lang=en] .wl-mubarak{font-size:44px}
 }
+
+/* ================= LOGIN: scroll + app naam + dulha dulhan animation ================= */
+#loginScreen{overflow-y:auto; align-items:flex-start}
+#loginScreen .lg-card{margin:auto}
+.lg-app{font-family:"Playfair Display",Georgia,serif!important; font-size:23px; letter-spacing:.3px; line-height:1.4; margin:2px 0 6px; direction:ltr}
+.lg-couple{width:min(250px,78%); margin:0 auto -4px}
+.lg-couple svg{display:block; width:100%; height:auto; overflow:visible}
+.cp-groom, .cp-bride, .cp-heart, .cp-spark, .cp-moon, .cp-dup, .cp-turra, .pt{transform-box:fill-box; transform-origin:50% 100%}
+.cp-groom{animation:cpBob 3.2s ease-in-out infinite}
+.cp-bride{animation:cpBob 3.2s ease-in-out infinite; animation-delay:-1.6s}
+.cp-heart{transform-origin:50% 50%; animation:cpBeat 1.4s ease-in-out infinite}
+.cp-moon{transform-origin:50% 50%; animation:cpGlow 3s ease-in-out infinite}
+.cp-spark{transform-origin:50% 50%; animation:cpTwinkle 2.2s ease-in-out infinite}
+.cp-spark.s2{animation-delay:-.7s} .cp-spark.s3{animation-delay:-1.4s}
+.cp-dup{transform-origin:50% 0; animation:cpSway 4s ease-in-out infinite}
+.cp-turra{transform-origin:0 100%; animation:cpSway 2.6s ease-in-out infinite}
+.pt{transform-origin:50% 50%; animation:cpFall 6s linear infinite; opacity:0}
+.pt.p2{animation-delay:-1.2s; animation-duration:7s} .pt.p3{animation-delay:-2.6s}
+.pt.p4{animation-delay:-3.8s; animation-duration:6.6s} .pt.p5{animation-delay:-4.9s; animation-duration:7.4s}
+@keyframes cpBob{0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)}}
+@keyframes cpBeat{0%,100%{transform:scale(1)} 15%{transform:scale(1.18)} 30%{transform:scale(1)} 45%{transform:scale(1.12)}}
+@keyframes cpGlow{0%,100%{opacity:.75} 50%{opacity:1}}
+@keyframes cpTwinkle{0%,100%{transform:scale(.6); opacity:.4} 50%{transform:scale(1.15); opacity:1}}
+@keyframes cpSway{0%,100%{transform:rotate(0)} 50%{transform:rotate(2deg)}}
+@keyframes cpFall{0%{transform:translate(0,-6px) rotate(0); opacity:0} 10%{opacity:.95} 90%{opacity:.9} 100%{transform:translate(-14px,176px) rotate(220deg); opacity:0}}
+@media (prefers-reduced-motion: reduce){ .lg-couple *{animation:none!important} .pt{display:none} }
 </style>
 </head>
 
@@ -786,21 +821,117 @@ html[lang=en] .header h1{line-height:1.4}
 <div id="loginScreen" style="display:none">
   <div class="lg-card">
     <button type="button" class="lang-btn lg-lang" id="langBtnLogin" onclick="toggleLang()">🌐 English</button>
-    <div class="lg-icon">💍</div>
-    <div class="lg-title" id="lgTitle">محمد صدیق کی شادی</div>
+    <div class="lg-couple" aria-hidden="true">
+      <svg viewBox="0 0 260 170" role="img">
+        <defs>
+          <linearGradient id="cpSher" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#f1d9a6"/></linearGradient>
+          <linearGradient id="cpLeh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c62828"/><stop offset="1" stop-color="#8e0f2a"/></linearGradient>
+          <linearGradient id="cpDup" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e53950"/><stop offset="1" stop-color="#b0123a"/></linearGradient>
+          <radialGradient id="cpGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="130" cy="96" rx="125" ry="74" fill="url(#cpGlow)"/>
+        <!-- chand aur sitara -->
+        <g class="cp-moon">
+          <path d="M136 14 a13 13 0 1 0 9 22 a10 10 0 1 1 -9 -22z" fill="#ffd54f"/>
+          <path d="M150 18 l1.8 4 4.2 .4 -3.2 2.8 1 4.2 -3.8 -2.2 -3.8 2.2 1 -4.2 -3.2 -2.8 4.2 -.4z" fill="#ffd54f"/>
+        </g>
+        <g class="cp-spark"><path d="M30 30 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#ffca28"/></g>
+        <g class="cp-spark s2"><path d="M228 40 l1.6 5 5 1.6 -5 1.6 -1.6 5 -1.6 -5 -5 -1.6 5 -1.6z" fill="#ffca28"/></g>
+        <g class="cp-spark s3"><path d="M214 130 l1.4 4 4 1.4 -4 1.4 -1.4 4 -1.4 -4 -4 -1.4 4 -1.4z" fill="#f48fb1"/></g>
+
+        <!-- DULHA -->
+        <g class="cp-groom">
+          <path d="M50 172 L57 112 Q61 98 82 96 Q103 98 107 112 L114 172 Z" fill="url(#cpSher)" stroke="#d4a24c" stroke-width="1.5"/>
+          <path d="M82 98 L82 170" stroke="#d4a24c" stroke-width="1.2"/>
+          <g fill="#c9922e"><circle cx="82" cy="112" r="1.8"/><circle cx="82" cy="124" r="1.8"/><circle cx="82" cy="136" r="1.8"/><circle cx="82" cy="148" r="1.8"/><circle cx="82" cy="160" r="1.8"/></g>
+          <path d="M60 106 Q72 128 70 172 L62 172 Q64 132 56 112 Z" fill="#c62828" opacity=".92"/>
+          <path d="M62 172 L70 172" stroke="#ffd54f" stroke-width="3"/>
+          <rect x="76" y="86" width="12" height="12" rx="4" fill="#e9b98f"/>
+          <path d="M74 97 Q82 102 90 97 L90 100 Q82 105 74 100Z" fill="#d4a24c"/>
+          <circle cx="82" cy="74" r="16" fill="#f1c7a0"/>
+          <path d="M68 78 Q70 92 82 93 Q94 92 96 78 Q93 86 82 87 Q71 86 68 78Z" fill="#4e342e"/>
+          <path d="M75 72 q3 -3 6 0" stroke="#3e2723" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path d="M84 72 q3 -3 6 0" stroke="#3e2723" stroke-width="1.6" fill="none" stroke-linecap="round" transform="translate(-1 0)"/>
+          <path d="M78 81 q4 3 8 0" stroke="#8d3b2a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <!-- kulla aur pagri -->
+          <path d="M64 68 Q65 46 82 43 Q99 46 100 68 Q82 60 64 68Z" fill="#c62828"/>
+          <path d="M66 62 Q82 54 98 62" stroke="#ffd54f" stroke-width="2" fill="none"/>
+          <path d="M68 54 Q82 47 96 54" stroke="#ffd54f" stroke-width="1.5" fill="none"/>
+          <path d="M76 45 L82 29 L88 45Z" fill="#ffca28" stroke="#d4a24c" stroke-width="1"/>
+          <path d="M96 50 Q108 38 104 26 Q100 38 92 46Z" fill="#ffca28" opacity=".9" class="cp-turra"/>
+          <!-- sehra ki larian (kinaron par) -->
+          <g class="cp-sehra" stroke="#fff" stroke-width="1" stroke-dasharray="1 3" stroke-linecap="round">
+            <path d="M66 66 L64 92"/><path d="M69 65 L68 90"/><path d="M95 65 L96 90"/><path d="M98 66 L100 92"/>
+          </g>
+        </g>
+
+        <!-- dil -->
+        <g class="cp-heart">
+          <path d="M130 88 C130 80 120 76 116 83 C112 90 122 97 130 104 C138 97 148 90 144 83 C140 76 130 80 130 88Z" fill="#ec407a"/>
+          <path d="M122 84 q2 -3 5 -2" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".8"/>
+        </g>
+
+        <!-- DULHAN -->
+        <g class="cp-bride">
+          <path d="M146 172 Q154 124 166 112 L194 112 Q206 124 214 172 Z" fill="url(#cpLeh)"/>
+          <path d="M147 166 Q180 160 213 166 L214 172 L146 172Z" fill="#ffca28"/>
+          <path d="M150 152 Q180 147 210 152" stroke="#ffd54f" stroke-width="1.4" fill="none" stroke-dasharray="2 3"/>
+          <path d="M164 114 Q166 100 180 98 Q194 100 196 114 Z" fill="#ad1457"/>
+          <rect x="174" y="86" width="12" height="12" rx="4" fill="#e9b98f"/>
+          <circle cx="180" cy="74" r="15" fill="#f3cba8"/>
+          <path d="M166 70 Q168 58 180 57 Q192 58 194 70 Q186 64 180 64 Q174 64 166 70Z" fill="#3e2723"/>
+          <path d="M173 72 q3 -3 6 0" stroke="#3e2723" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <path d="M182 72 q3 -3 6 0" stroke="#3e2723" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="172" cy="78" r="2.6" fill="#f48fb1" opacity=".7"/><circle cx="188" cy="78" r="2.6" fill="#f48fb1" opacity=".7"/>
+          <path d="M176 81 q4 3 8 0" stroke="#c2185b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M180 57 L180 64" stroke="#ffca28" stroke-width="1.2"/><circle cx="180" cy="65.5" r="2.4" fill="#ffca28" stroke="#fff" stroke-width=".6"/>
+          <circle cx="185.5" cy="79" r="2.2" fill="none" stroke="#ffca28" stroke-width="1"/>
+          <!-- dupatta (sar par) -->
+          <path class="cp-dup" d="M160 76 Q158 48 180 46 Q202 48 200 76 Q206 104 214 150 Q200 140 196 116 Q194 92 192 72 Q186 58 180 58 Q174 58 168 72 Q166 92 164 116 Q160 140 146 150 Q154 104 160 76Z" fill="url(#cpDup)" opacity=".95"/>
+          <path d="M162 74 Q162 52 180 50 Q198 52 198 74" stroke="#ffd54f" stroke-width="1.6" fill="none" stroke-dasharray="2.5 2.5"/>
+        </g>
+
+        <!-- phool ki pattian -->
+        <g class="cp-petals">
+          <ellipse class="pt p1" cx="40" cy="0" rx="3" ry="5" fill="#f48fb1"/>
+          <ellipse class="pt p2" cx="110" cy="0" rx="2.5" ry="4.5" fill="#ff8a80"/>
+          <ellipse class="pt p3" cx="160" cy="0" rx="3" ry="5" fill="#f8bbd0"/>
+          <ellipse class="pt p4" cx="232" cy="0" rx="2.5" ry="4.5" fill="#f48fb1"/>
+          <ellipse class="pt p5" cx="200" cy="0" rx="2" ry="4" fill="#ffcdd2"/>
+        </g>
+      </svg>
+    </div>
+    <div class="lg-title lg-app" id="lgTitle">Wedding Planner &amp; Calculator</div>
 
     <div id="lgLoginBox">
-      <div class="lg-sub">داخل ہونے کے لیے اپنا PIN ڈالیں</div>
-      <input id="lgPin" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      <div class="lg-sub">اپنے یوزر نیم اور پاس ورڈ سے داخل ہوں</div>
+      <input id="lgUser" type="text" dir="ltr" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username" placeholder="یوزر نیم یا ای میل">
+      <input id="lgPass" type="password" dir="ltr" autocomplete="current-password" placeholder="پاس ورڈ" onkeydown="if(event.key==='Enter')doLogin()">
       <button type="button" class="lg-btn" id="lgBtn" onclick="doLogin()">🔓 داخل ہوں</button>
+      <div class="lg-links"><a href="#" onclick="showLgBox('forgot');return false;">پاس ورڈ بھول گئے؟</a></div>
+      <div class="lg-links"><span>نیا اکاؤنٹ؟</span> <a href="#" onclick="showLgBox('signup');return false;">اکاؤنٹ بنائیں</a></div>
     </div>
 
-    <div id="lgSetupBox" style="display:none">
-      <div class="lg-sub">پہلی بار: ایڈمن (آپ) کا اکاؤنٹ بنائیں</div>
-      <input id="suName" type="text" placeholder="آپ کا نام (e.g. Adnan)">
-      <input id="suPin" type="password" inputmode="numeric" placeholder="PIN (کم از کم 6 ہندسے)" autocomplete="new-password">
-      <input id="suPin2" type="password" inputmode="numeric" placeholder="PIN دوبارہ" autocomplete="new-password">
-      <button type="button" class="lg-btn" id="suBtn" onclick="setupAdmin()">👑 ایڈمن اکاؤنٹ بنائیں</button>
+    <div id="lgSignupBox" style="display:none">
+      <div class="lg-sub">نیا اکاؤنٹ بنائیں — آپ کا حساب صرف آپ کو نظر آئے گا</div>
+      <input id="suName" type="text" dir="auto" autocomplete="name" placeholder="آپ کا نام">
+      <input id="suGroom" type="text" dir="auto" autocomplete="off" placeholder="دولہا کا نام" oninput="updateUrduPreview(this.value, 'suGroomUrduPreview')">
+      <div class="urdu-preview lg-prev" id="suGroomUrduPreview"></div>
+      <input id="suBride" type="text" dir="auto" autocomplete="off" placeholder="دلہن کا نام" oninput="updateUrduPreview(this.value, 'suBrideUrduPreview')">
+      <div class="urdu-preview lg-prev" id="suBrideUrduPreview"></div>
+      <input id="suUser" type="text" dir="ltr" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username" placeholder="یوزر نیم (انگریزی حروف، مثلاً adnan92)">
+      <input id="suEmail" type="email" dir="ltr" autocapitalize="none" autocomplete="email" placeholder="ای میل (لازمی)">
+      <input id="suPass" type="password" dir="ltr" autocomplete="new-password" placeholder="پاس ورڈ (کم از کم 6 حروف)">
+      <input id="suPass2" type="password" dir="ltr" autocomplete="new-password" placeholder="پاس ورڈ دوبارہ" onkeydown="if(event.key==='Enter')doSignup()">
+      <button type="button" class="lg-btn" id="suBtn" onclick="doSignup()">✨ اکاؤنٹ بنائیں</button>
+      <div class="lg-links"><span>پہلے سے اکاؤنٹ ہے؟</span> <a href="#" onclick="showLgBox('login');return false;">داخل ہوں</a></div>
+    </div>
+
+    <div id="lgForgotBox" style="display:none">
+      <div class="lg-sub">اپنا یوزر نیم یا ای میل لکھیں۔ پاس ورڈ بدلنے کا لنک آپ کی ای میل پر آ جائے گا۔</div>
+      <input id="fgUser" type="text" dir="ltr" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username" placeholder="یوزر نیم یا ای میل" onkeydown="if(event.key==='Enter')doForgot()">
+      <button type="button" class="lg-btn" id="fgBtn" onclick="doForgot()">📧 لنک بھیجیں</button>
+      <div class="lg-links"><a href="#" onclick="showLgBox('login');return false;">← واپس</a></div>
     </div>
 
     <div class="lg-msg" id="lgMsg"></div>
@@ -1159,7 +1290,7 @@ html[lang=en] .header h1{line-height:1.4}
   <main id="contactPage" class="page" style="display:none">
     <section class="card">
       <div class="card-title">📞 ہم سے رابطہ کریں</div>
-      <div class="hint" style="margin-top:0">ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا پیغام لکھیں اور واٹس ایپ کا بٹن دبائیں۔</div>
+      <div class="hint" style="margin-top:0">ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا نام اور مسئلہ لکھیں اور لائیو چیٹ کا بٹن دبائیں — چیٹ ایپ کے اندر ہی کھلے گی۔</div>
       <div class="field" style="margin-top:12px">
         <label for="ctName">آپ کا نام</label>
         <input id="ctName" type="text" dir="auto" placeholder="e.g. Adnan">
@@ -1169,7 +1300,7 @@ html[lang=en] .header h1{line-height:1.4}
         <textarea id="ctMsg" rows="4" dir="auto" placeholder="اپنا مسئلہ یا تبدیلی یہاں لکھیں…"></textarea>
       </div>
       <div class="actions">
-        <button type="button" class="btn btn-primary" onclick="contactWhatsApp()">💬 واٹس ایپ پر لائیو چیٹ</button>
+        <button type="button" class="btn btn-primary" id="ctChatBtn" onclick="openLiveChat()">💬 لائیو چیٹ شروع کریں</button>
       </div>
       <div class="actions">
         <button type="button" class="btn btn-secondary" id="ctCallBtn" style="flex:1" onclick="contactCall()">📞 کال کریں</button>
@@ -1189,8 +1320,16 @@ html[lang=en] .header h1{line-height:1.4}
           <div class="urdu-preview" id="nuNameUrduPreview"></div>
         </div>
         <div class="field">
-          <label for="nuPin">PIN (کم از کم 6 ہندسے — ہر صارف کا الگ)</label>
-          <input id="nuPin" type="text" inputmode="numeric" placeholder="e.g. 123456" autocomplete="off">
+          <label for="nuUser">یوزر نیم (انگریزی حروف)</label>
+          <input id="nuUser" type="text" dir="ltr" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="e.g. bilal_22" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="nuEmail">ای میل (لازمی)</label>
+          <input id="nuEmail" type="email" dir="ltr" autocapitalize="none" placeholder="e.g. bilal@gmail.com" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="nuPass">پاس ورڈ (کم از کم 6 حروف)</label>
+          <input id="nuPass" type="text" dir="ltr" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="e.g. bilal@123" autocomplete="off">
         </div>
       </div>
       <div class="perm-box">
@@ -1204,14 +1343,14 @@ html[lang=en] .header h1{line-height:1.4}
       <div class="actions">
         <button class="btn btn-primary" id="nuBtn" onclick="createUserAccount()">➕ صارف بنائیں</button>
       </div>
-      <div class="hint">صارف اپنے موبائل پر یہی ایپ کھولے اور یہی PIN ڈالے۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔</div>
+      <div class="hint">صارف اپنے موبائل پر یہی ایپ کھولے اور یہی یوزر نیم اور پاس ورڈ ڈالے۔ پاس ورڈ بھولنے پر لنک اسی ای میل پر جائے گا۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔</div>
     </section>
 
     <section class="card">
       <div class="card-title">📋 صارفین کی فہرست</div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>نام</th><th>مہمان</th><th>اخراجات</th><th>دیگیں</th><th>سلامی</th><th>صرف دیکھنا</th><th>رسائی ختم</th></tr></thead>
+          <thead><tr><th>نام</th><th>یوزر نیم</th><th>مہمان</th><th>اخراجات</th><th>دیگیں</th><th>سلامی</th><th>صرف دیکھنا</th><th>رسائی ختم</th></tr></thead>
           <tbody id="usersTable"></tbody>
         </table>
       </div>
@@ -1237,12 +1376,12 @@ html[lang=en] .header h1{line-height:1.4}
    (koi login nahi, data sirf is mobile/computer mein).
    ===================================================================== */
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyCRnryvC7VAWfUppSEdtYdPn7dSttyv84I",
+  authDomain: "wedding-planner-703fc.firebaseapp.com",
+  projectId: "wedding-planner-703fc",
+  storageBucket: "wedding-planner-703fc.firebasestorage.app",
+  messagingSenderId: "283306597626",
+  appId: "1:283306597626:web:5e739ac8d28806d963fd43"
 };
 const USE_FIREBASE = !!(firebaseConfig.apiKey && firebaseConfig.projectId);
 /* ================= ZUBAN (URDU / ENGLISH) =================
@@ -1251,7 +1390,7 @@ const LANG_KEY = "sadiq_wedding_lang_v1";
 let LANG = "ur";
 try { LANG = localStorage.getItem(LANG_KEY) === "en" ? "en" : "ur"; } catch(e){}
 function L(ur, en){ return LANG === "en" ? en : ur; }
-const I18N_EN = {"رابطہ کریں": "Contact Us", "📞 ہم سے رابطہ کریں": "📞 Contact Us", "ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا پیغام لکھیں اور واٹس ایپ کا بٹن دبائیں۔": "If you face any issue in the app or want a change, talk to us directly. Write your message and tap the WhatsApp button.", "آپ کا نام": "Your name", "آپ کا پیغام / مسئلہ": "Your message / issue", "اپنا مسئلہ یا تبدیلی یہاں لکھیں…": "Write your issue or change here…", "💬 واٹس ایپ پر لائیو چیٹ": "💬 Live chat on WhatsApp", "📞 کال کریں": "📞 Call", "✉️ ای میل کریں": "✉️ Email", "شادی مبارک": "Wedding Mubarak", "اللہ پاک یہ نیا سفر محبت، خوشیوں اور برکتوں سے بھر دے": "May Allah fill this new journey with love, happiness and blessings", "✨ شروع کریں": "✨ Start", "داخل ہونے کے لیے اپنا PIN ڈالیں": "Enter your PIN to sign in", "🔓 داخل ہوں": "🔓 Sign in", "پہلی بار: ایڈمن (آپ) کا اکاؤنٹ بنائیں": "First time: create the admin (your) account", "آپ کا نام (e.g. Adnan)": "Your name (e.g. Adnan)", "PIN (کم از کم 6 ہندسے)": "PIN (at least 6 digits)", "PIN دوبارہ": "PIN again", "👑 ایڈمن اکاؤنٹ بنائیں": "👑 Create admin account", "✏️ نام بدلیں": "✏️ Change name", "✔️ محفوظ کریں": "✔️ Save", "منسوخ": "Cancel", "مہمانوں، دیگوں اور اخراجات کا مکمل حساب": "Complete record of guests, daigs and expenses", "مینو": "Menu", "لاگ آؤٹ": "Log out", "ڈیش بورڈ": "Dashboard", "مہمانوں کی فہرست": "Guest List", "دیگوں کا حساب": "Daig Calculator", "اخراجات": "Expenses", "سلامی و تحائف": "Salami & Gifts", "صارفین اور اجازت": "Users & Permissions", "📊 شادی کا مرکزی ڈیش بورڈ": "📊 Wedding Dashboard", "مہمانوں کی فہرست — کل گھرانے": "Guest List — Total households", "کھولیں ←": "Open →", "دیگوں کا حساب — مطلوبہ دیگیں": "Daig Calculator — Daigs needed", "اخراجات — کل خرچہ": "Expenses — Total spent", "سلامی و تحائف — کل نقد": "Salami & Gifts — Total cash", "🖨️ ڈیش بورڈ اور اخراجات خلاصہ پرنٹ کریں": "🖨️ Print dashboard & expense summary", "🖨️ نارمل فہرست پرنٹ کریں": "🖨️ Print normal list", "✂️ لیبل پرنٹ کریں (نام و پتہ)": "✂️ Print labels (name & address)", "📖 بک لیٹ فہرست (زیادہ نام)": "📖 Booklet list (more names)", "🏠 نیا گھرانہ شامل کریں": "🏠 Add new household", "گھر کے سربراہ کا نام (English / Roman Urdu)": "Head of household name", "افراد کی تعداد": "Number of people", "مثلاً: 5": "e.g. 5", "پتہ (English / Roman Urdu)": "Address", "نوٹ (اختیاری)": "Note (optional)", "➕ گھرانہ شامل کریں": "➕ Add household", "📋 گھرانوں کی فہرست": "📋 Household List", "کل گھر": "Total households", "کل افراد": "Total people", "🔎 نام یا پتہ تلاش کریں...": "🔎 Search name or address...", "نمبر": "No.", "سربراہ کا نام": "Head of household", "پتہ": "Address", "افراد": "People", "نوٹ": "Note", "ترمیم / حذف": "Edit / Delete", "🍲 دیگوں کا حساب پرنٹ کریں": "🍲 Print daig calculation", "🍲 دیگوں اور کھانے کا تخمینہ و حساب": "🍲 Daig & Food Estimate", "کل افراد (خودکار)": "Total people (automatic)", "ایک دیگ کتنے افراد کے لیے کافی ہے؟": "How many people does one daig serve?", "ایک دیگ کا سائز (کلو چاول / گوشت)": "Size of one daig (kg rice / meat)", "فی دیگ متوقع قیمت / لاگت (Rs.)": "Expected cost per daig (Rs.)", "مثلاً: 18000": "e.g. 18000", "📊 کھانے اور دیگوں کی مکمل تفصیل:": "📊 Full food & daig details:", "مطلوبہ دیگیں": "Daigs needed", "کل چاول / گوشت (کلو)": "Total rice / meat (kg)", "کل متوقع لاگت": "Total expected cost", "💡 بچت کا حساب — کون سا گوشت، کتنی دیگیں، اور میٹھا": "💡 Savings Calculator — which meat, how many daigs, and dessert", "ہر گوشت کی فی دیگ قیمت لکھیں۔ میٹھا ساتھ ہو تو لوگ سالن / بریانی کم کھاتے ہیں، اس لیے گوشت کی دیگیں کم لگتی ہیں۔ سسٹم بتائے گا کس میں سب سے زیادہ بچت ہے۔": "Enter the price per daig for each meat. When dessert is served people eat less curry / biryani, so fewer meat daigs are needed. The system shows which option saves the most.", "🐔 چکن — فی دیگ قیمت (Rs.)": "🐔 Chicken — price per daig (Rs.)", "🐄 بیف — فی دیگ قیمت (Rs.)": "🐄 Beef — price per daig (Rs.)", "🐐 مٹن — فی دیگ قیمت (Rs.)": "🐐 Mutton — price per daig (Rs.)", "🍮 میٹھا کون سا؟": "🍮 Which dessert?", "زردہ": "Zarda", "کھیر": "Kheer", "فیرنی": "Firni", "حلوہ": "Halwa", "میٹھا — فی دیگ قیمت (Rs.)": "Dessert — price per daig (Rs.)", "میٹھے کی ایک دیگ کتنے افراد کو کافی؟": "How many people does one dessert daig serve?", "میٹھا ہو تو گوشت کتنا کم لگے گا؟ (%)": "With dessert, how much less meat is needed? (%)", "گوشت کی دیگیں": "Meat daigs", "میٹھے کی دیگیں": "Dessert daigs", "کل خرچہ": "Total cost", "بچت": "Savings", "💰 مکمل اخراجات کی تفصیل پرنٹ کریں": "💰 Print full expense details", "💰 نیا خرچہ درج کریں": "💰 Add new expense", "تاریخ (اپنی مرضی سے بدلیں)": "Date (change if needed)", "وقت (خودکار سیٹ)": "Time (set automatically)", "کیٹیگری (English / Roman Urdu)": "Category", "رقم (Rs.)": "Amount (Rs.)", "مثلاً: 25000": "e.g. 25000", "تفصیل / سامان کی معلومات (English / Roman Urdu)": "Details / items", "مثلاً: 5 daigein Farooq dukan se": "e.g. 5 daigs from Farooq's shop", "➕ خرچہ شامل کریں": "➕ Add expense", "📜 اخراجات کی مکمل تفصیل (Full Details)": "📜 Full Expense Details", "تاریخ و وقت": "Date & time", "کیٹیگری": "Category", "تفصیل": "Details", "رقم": "Amount", "🎁 سلامی و تحائف کی فہرست پرنٹ کریں": "🎁 Print salami & gifts list", "🎁 نئی سلامی / تحفہ درج کریں": "🎁 Add new salami / gift", "مہمان کا نام (English / Roman Urdu)": "Guest name", "سلامی کی رقم (Rs.)": "Salami amount (Rs.)", "مثلاً: 5000": "e.g. 5000", "تحفہ / تفصیل (English / Roman Urdu)": "Gift / details", "رقم یا تحفے کی تفصیل — دونوں میں سے کم از کم ایک لازمی ہے۔ رقم خالی چھوڑنی ہو تو تحفے کی تفصیل ضرور لکھیں۔": "Amount or gift details — at least one is required. If you leave the amount empty, write the gift details.", "➕ سلامی / تحفہ شامل کریں": "➕ Add salami / gift", "📜 سلامی دینے والوں کی فہرست": "📜 List of Salami Givers", "🔎 نام، پتہ یا تحفہ تلاش کریں...": "🔎 Search name, address or gift...", "مہمان کا نام": "Guest name", "تحفہ / تفصیل": "Gift / details", "📊 سلامی و تحائف کا مکمل خلاصہ": "📊 Salami & Gifts Summary", "کل اندراج": "Total entries", "کل نقد رقم": "Total cash", "کل تحائف": "Total gifts", "🎁 کون کون سے تحائف ملے:": "🎁 Gifts received:", "👥 نیا صارف بنائیں": "👥 Create new user", "نام (English / Roman Urdu)": "Name", "PIN (کم از کم 6 ہندسے — ہر صارف کا الگ)": "PIN (at least 6 digits — different for each user)", "اس صارف کو کیا اجازت ہو؟": "What can this user do?", "🏠 مہمان شامل کرنا": "🏠 Add guests", "💰 اخراجات شامل کرنا": "💰 Add expenses", "🍲 دیگوں کا حساب": "🍲 Daig calculator", "🎁 سلامی و تحائف": "🎁 Salami & gifts", "👁️ صرف دیکھنا (سب کچھ)": "👁️ View only (everything)", "➕ صارف بنائیں": "➕ Create user", "صارف اپنے موبائل پر یہی ایپ کھولے اور یہی PIN ڈالے۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔": "The user opens this same app on their mobile and enters this PIN. Only the admin (you) can delete.", "📋 صارفین کی فہرست": "📋 Users List", "نام": "Name", "مہمان": "Guests", "دیگیں": "Daigs", "سلامی": "Salami", "صرف دیکھنا": "View only", "رسائی ختم": "Remove access", "☁️ پرانا ڈیٹا آن لائن بھیجیں": "☁️ Send old data online", "⬆️ اس موبائل/کمپیوٹر کا پرانا ڈیٹا آن لائن بھیجیں": "⬆️ Send this device's old data online", "e.g. Ali Raza ki shadi": "e.g. Ali Raza's Wedding", "e.g. Bachon samet": "e.g. With children", "e.g. Khana, Hall": "e.g. Food, Hall", "e.g. Sone ki angoothi, Dinner set": "e.g. Gold ring, Dinner set"};
+const I18N_EN = {"دولہا کا نام": "Groom's name", "دلہن کا نام": "Bride's name", "شادی کا حساب": "Wedding Hisab", "اپنے یوزر نیم اور پاس ورڈ سے داخل ہوں": "Sign in with your username and password", "یوزر نیم یا ای میل": "Username or email", "پاس ورڈ": "Password", "پاس ورڈ بھول گئے؟": "Forgot password?", "نیا اکاؤنٹ؟": "New here?", "اکاؤنٹ بنائیں": "Create account", "نیا اکاؤنٹ بنائیں — آپ کا حساب صرف آپ کو نظر آئے گا": "Create a new account — your records are visible only to you", "آپ کا نام": "Your name", "یوزر نیم (انگریزی حروف، مثلاً adnan92)": "Username (English letters, e.g. adnan92)", "ای میل (لازمی)": "Email (required)", "پاس ورڈ (کم از کم 6 حروف)": "Password (at least 6 characters)", "پاس ورڈ دوبارہ": "Password again", "✨ اکاؤنٹ بنائیں": "✨ Create account", "پہلے سے اکاؤنٹ ہے؟": "Already have an account?", "داخل ہوں": "Sign in", "اپنا یوزر نیم یا ای میل لکھیں۔ پاس ورڈ بدلنے کا لنک آپ کی ای میل پر آ جائے گا۔": "Enter your username or email. A link to reset your password will be sent to your email.", "📧 لنک بھیجیں": "📧 Send link", "← واپس": "← Back", "یوزر نیم (انگریزی حروف)": "Username (English letters)", "یوزر نیم": "Username", "صارف اپنے موبائل پر یہی ایپ کھولے اور یہی یوزر نیم اور پاس ورڈ ڈالے۔ پاس ورڈ بھولنے پر لنک اسی ای میل پر جائے گا۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔": "The user opens this same app on their mobile and enters this username and password. If they forget the password, the reset link goes to this email. Only the admin (you) can delete.", "رابطہ کریں": "Contact Us", "📞 ہم سے رابطہ کریں": "📞 Contact Us", "ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا نام اور مسئلہ لکھیں اور لائیو چیٹ کا بٹن دبائیں — چیٹ ایپ کے اندر ہی کھلے گی۔": "If you face any issue in the app or want a change, talk to us directly. Write your name and issue and tap Live Chat — the chat opens right inside the app.", "آپ کا نام": "Your name", "آپ کا پیغام / مسئلہ": "Your message / issue", "اپنا مسئلہ یا تبدیلی یہاں لکھیں…": "Write your issue or change here…", "💬 لائیو چیٹ شروع کریں": "💬 Start live chat", "📞 کال کریں": "📞 Call", "✉️ ای میل کریں": "✉️ Email", "شادی مبارک": "Wedding Mubarak", "اللہ پاک یہ نیا سفر محبت، خوشیوں اور برکتوں سے بھر دے": "May Allah fill this new journey with love, happiness and blessings", "✨ شروع کریں": "✨ Start", "داخل ہونے کے لیے اپنا PIN ڈالیں": "Enter your PIN to sign in", "🔓 داخل ہوں": "🔓 Sign in", "پہلی بار: ایڈمن (آپ) کا اکاؤنٹ بنائیں": "First time: create the admin (your) account", "آپ کا نام (e.g. Adnan)": "Your name (e.g. Adnan)", "PIN (کم از کم 6 ہندسے)": "PIN (at least 6 digits)", "PIN دوبارہ": "PIN again", "👑 ایڈمن اکاؤنٹ بنائیں": "👑 Create admin account", "✏️ نام بدلیں": "✏️ Change name", "✔️ محفوظ کریں": "✔️ Save", "منسوخ": "Cancel", "مہمانوں، دیگوں اور اخراجات کا مکمل حساب": "Complete record of guests, daigs and expenses", "مینو": "Menu", "لاگ آؤٹ": "Log out", "ڈیش بورڈ": "Dashboard", "مہمانوں کی فہرست": "Guest List", "دیگوں کا حساب": "Daig Calculator", "اخراجات": "Expenses", "سلامی و تحائف": "Salami & Gifts", "صارفین اور اجازت": "Users & Permissions", "📊 شادی کا مرکزی ڈیش بورڈ": "📊 Wedding Dashboard", "مہمانوں کی فہرست — کل گھرانے": "Guest List — Total households", "کھولیں ←": "Open →", "دیگوں کا حساب — مطلوبہ دیگیں": "Daig Calculator — Daigs needed", "اخراجات — کل خرچہ": "Expenses — Total spent", "سلامی و تحائف — کل نقد": "Salami & Gifts — Total cash", "🖨️ ڈیش بورڈ اور اخراجات خلاصہ پرنٹ کریں": "🖨️ Print dashboard & expense summary", "🖨️ نارمل فہرست پرنٹ کریں": "🖨️ Print normal list", "✂️ لیبل پرنٹ کریں (نام و پتہ)": "✂️ Print labels (name & address)", "📖 بک لیٹ فہرست (زیادہ نام)": "📖 Booklet list (more names)", "🏠 نیا گھرانہ شامل کریں": "🏠 Add new household", "گھر کے سربراہ کا نام (English / Roman Urdu)": "Head of household name", "افراد کی تعداد": "Number of people", "مثلاً: 5": "e.g. 5", "پتہ (English / Roman Urdu)": "Address", "نوٹ (اختیاری)": "Note (optional)", "➕ گھرانہ شامل کریں": "➕ Add household", "📋 گھرانوں کی فہرست": "📋 Household List", "کل گھر": "Total households", "کل افراد": "Total people", "🔎 نام یا پتہ تلاش کریں...": "🔎 Search name or address...", "نمبر": "No.", "سربراہ کا نام": "Head of household", "پتہ": "Address", "افراد": "People", "نوٹ": "Note", "ترمیم / حذف": "Edit / Delete", "🍲 دیگوں کا حساب پرنٹ کریں": "🍲 Print daig calculation", "🍲 دیگوں اور کھانے کا تخمینہ و حساب": "🍲 Daig & Food Estimate", "کل افراد (خودکار)": "Total people (automatic)", "ایک دیگ کتنے افراد کے لیے کافی ہے؟": "How many people does one daig serve?", "ایک دیگ کا سائز (کلو چاول / گوشت)": "Size of one daig (kg rice / meat)", "فی دیگ متوقع قیمت / لاگت (Rs.)": "Expected cost per daig (Rs.)", "مثلاً: 18000": "e.g. 18000", "📊 کھانے اور دیگوں کی مکمل تفصیل:": "📊 Full food & daig details:", "مطلوبہ دیگیں": "Daigs needed", "کل چاول / گوشت (کلو)": "Total rice / meat (kg)", "کل متوقع لاگت": "Total expected cost", "💡 بچت کا حساب — کون سا گوشت، کتنی دیگیں، اور میٹھا": "💡 Savings Calculator — which meat, how many daigs, and dessert", "ہر گوشت کی فی دیگ قیمت لکھیں۔ میٹھا ساتھ ہو تو لوگ سالن / بریانی کم کھاتے ہیں، اس لیے گوشت کی دیگیں کم لگتی ہیں۔ سسٹم بتائے گا کس میں سب سے زیادہ بچت ہے۔": "Enter the price per daig for each meat. When dessert is served people eat less curry / biryani, so fewer meat daigs are needed. The system shows which option saves the most.", "🐔 چکن — فی دیگ قیمت (Rs.)": "🐔 Chicken — price per daig (Rs.)", "🐄 بیف — فی دیگ قیمت (Rs.)": "🐄 Beef — price per daig (Rs.)", "🐐 مٹن — فی دیگ قیمت (Rs.)": "🐐 Mutton — price per daig (Rs.)", "🍮 میٹھا کون سا؟": "🍮 Which dessert?", "زردہ": "Zarda", "کھیر": "Kheer", "فیرنی": "Firni", "حلوہ": "Halwa", "میٹھا — فی دیگ قیمت (Rs.)": "Dessert — price per daig (Rs.)", "میٹھے کی ایک دیگ کتنے افراد کو کافی؟": "How many people does one dessert daig serve?", "میٹھا ہو تو گوشت کتنا کم لگے گا؟ (%)": "With dessert, how much less meat is needed? (%)", "گوشت کی دیگیں": "Meat daigs", "میٹھے کی دیگیں": "Dessert daigs", "کل خرچہ": "Total cost", "بچت": "Savings", "💰 مکمل اخراجات کی تفصیل پرنٹ کریں": "💰 Print full expense details", "💰 نیا خرچہ درج کریں": "💰 Add new expense", "تاریخ (اپنی مرضی سے بدلیں)": "Date (change if needed)", "وقت (خودکار سیٹ)": "Time (set automatically)", "کیٹیگری (English / Roman Urdu)": "Category", "رقم (Rs.)": "Amount (Rs.)", "مثلاً: 25000": "e.g. 25000", "تفصیل / سامان کی معلومات (English / Roman Urdu)": "Details / items", "مثلاً: 5 daigein Farooq dukan se": "e.g. 5 daigs from Farooq's shop", "➕ خرچہ شامل کریں": "➕ Add expense", "📜 اخراجات کی مکمل تفصیل (Full Details)": "📜 Full Expense Details", "تاریخ و وقت": "Date & time", "کیٹیگری": "Category", "تفصیل": "Details", "رقم": "Amount", "🎁 سلامی و تحائف کی فہرست پرنٹ کریں": "🎁 Print salami & gifts list", "🎁 نئی سلامی / تحفہ درج کریں": "🎁 Add new salami / gift", "مہمان کا نام (English / Roman Urdu)": "Guest name", "سلامی کی رقم (Rs.)": "Salami amount (Rs.)", "مثلاً: 5000": "e.g. 5000", "تحفہ / تفصیل (English / Roman Urdu)": "Gift / details", "رقم یا تحفے کی تفصیل — دونوں میں سے کم از کم ایک لازمی ہے۔ رقم خالی چھوڑنی ہو تو تحفے کی تفصیل ضرور لکھیں۔": "Amount or gift details — at least one is required. If you leave the amount empty, write the gift details.", "➕ سلامی / تحفہ شامل کریں": "➕ Add salami / gift", "📜 سلامی دینے والوں کی فہرست": "📜 List of Salami Givers", "🔎 نام، پتہ یا تحفہ تلاش کریں...": "🔎 Search name, address or gift...", "مہمان کا نام": "Guest name", "تحفہ / تفصیل": "Gift / details", "📊 سلامی و تحائف کا مکمل خلاصہ": "📊 Salami & Gifts Summary", "کل اندراج": "Total entries", "کل نقد رقم": "Total cash", "کل تحائف": "Total gifts", "🎁 کون کون سے تحائف ملے:": "🎁 Gifts received:", "👥 نیا صارف بنائیں": "👥 Create new user", "نام (English / Roman Urdu)": "Name", "PIN (کم از کم 6 ہندسے — ہر صارف کا الگ)": "PIN (at least 6 digits — different for each user)", "اس صارف کو کیا اجازت ہو؟": "What can this user do?", "🏠 مہمان شامل کرنا": "🏠 Add guests", "💰 اخراجات شامل کرنا": "💰 Add expenses", "🍲 دیگوں کا حساب": "🍲 Daig calculator", "🎁 سلامی و تحائف": "🎁 Salami & gifts", "👁️ صرف دیکھنا (سب کچھ)": "👁️ View only (everything)", "➕ صارف بنائیں": "➕ Create user", "صارف اپنے موبائل پر یہی ایپ کھولے اور یہی PIN ڈالے۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔": "The user opens this same app on their mobile and enters this PIN. Only the admin (you) can delete.", "📋 صارفین کی فہرست": "📋 Users List", "نام": "Name", "مہمان": "Guests", "دیگیں": "Daigs", "سلامی": "Salami", "صرف دیکھنا": "View only", "رسائی ختم": "Remove access", "☁️ پرانا ڈیٹا آن لائن بھیجیں": "☁️ Send old data online", "⬆️ اس موبائل/کمپیوٹر کا پرانا ڈیٹا آن لائن بھیجیں": "⬆️ Send this device's old data online", "e.g. Ali Raza ki shadi": "e.g. Ali Raza's Wedding", "e.g. Bachon samet": "e.g. With children", "e.g. Khana, Hall": "e.g. Food, Hall", "e.g. Sone ki angoothi, Dinner set": "e.g. Gold ring, Dinner set"};
 let i18nNodes = null;
 function collectI18n(){
   i18nNodes = [];
@@ -1288,7 +1427,7 @@ function applyLanguage(){
   ["langBtn","langBtnLogin"].forEach(id => { const b = document.getElementById(id); if(b) b.textContent = en ? "🌐 اردو" : "🌐 English"; });
   refreshPageName();
 }
-const PREVIEW_PAIRS = [["owner","ownerUrduPreview"],["address","addressUrduPreview"],["expCategory","catUrduPreview"],["expDetail","detailUrduPreview"],["salName","salNameUrduPreview"],["salAddress","salAddressUrduPreview"],["salGift","salGiftUrduPreview"],["nuName","nuNameUrduPreview"],["titleInput","titleUrduPreview"]];
+const PREVIEW_PAIRS = [["owner","ownerUrduPreview"],["address","addressUrduPreview"],["expCategory","catUrduPreview"],["expDetail","detailUrduPreview"],["salName","salNameUrduPreview"],["salAddress","salAddressUrduPreview"],["salGift","salGiftUrduPreview"],["nuName","nuNameUrduPreview"],["titleInput","titleUrduPreview"],["suGroom","suGroomUrduPreview"],["suBride","suBrideUrduPreview"]];
 function refreshEditButtons(){
   setEditMode("houseSaveBtn", "houseCancelBtn", !!editHouseId, L("➕ گھرانہ شامل کریں", "➕ Add household"));
   setEditMode("expSaveBtn", "expCancelBtn", !!editExpenseId, L("➕ خرچہ شامل کریں", "➕ Add expense"));
@@ -1308,7 +1447,6 @@ function setLang(l){
     }
   });
   applyTitle();
-  const lt = document.getElementById("lgTitle"); if(lt) lt.textContent = getTitle();
   renderTable(); renderExpenses(); renderSalami(); renderUsers();
   applyPermissionsUI();
   refreshEditButtons();
@@ -1549,7 +1687,9 @@ function getTitle(){
 function applyTitle(){
   const t = getTitle();
   document.getElementById("eventTitle").textContent = t;
-  document.title = t + L(" — مہمانوں اور اخراجات کا حساب", " — Guests & Expenses Tracker");
+  let loggedOut = false;
+  try { loggedOut = USE_FIREBASE && !FB.user; } catch(e){}
+  document.title = loggedOut ? "Wedding Planner & Calculator" : (t + " — Wedding Planner & Calculator");
   if(typeof updateWelcomeName === "function") updateWelcomeName();
 }
 function toggleTitleEdit(){
@@ -1565,7 +1705,7 @@ async function saveTitle(){
   if(!t){ alert(L("نام درج کریں", "Enter a name")); return; }
   if(USE_FIREBASE){
     if(!FB.isAdmin){ alert(L("نام صرف ایڈمن بدل سکتا ہے", "Only the admin can change the name")); return; }
-    FB.db.collection("config").doc("main").set(LANG === "en" ? { titleEn: t } : { title: t }, { merge: true }).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
+    wdoc().set(LANG === "en" ? { titleEn: t } : { title: t }, { merge: true }).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
   }
   try { localStorage.setItem(LANG === "en" ? TITLE_KEY_EN : TITLE_KEY, t); } catch(e){}
   applyTitle();
@@ -1675,7 +1815,7 @@ function setEditMode(btnId, cancelId, on, addText){
   document.getElementById(cancelId).style.display = on ? "" : "none";
 }
 function fbUpdate(col, id, data){
-  FB.db.collection(col).doc(id).update(data).catch(e => alert(L("تبدیلی محفوظ نہیں ہو سکی: ", "Could not save changes: ") + fbErr(e)));
+  wcol(col).doc(id).update(data).catch(e => alert(L("تبدیلی محفوظ نہیں ہو سکی: ", "Could not save changes: ") + fbErr(e)));
 }
 function rowActions(section, editFn, delFn, id){
   const parts = [];
@@ -1750,7 +1890,7 @@ function deleteHouse(id){
   if(id === editHouseId) cancelHouseEdit();
   if(USE_FIREBASE){
     if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
-    FB.db.collection("houses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
+    wcol("houses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   houses = houses.filter(h => h.id !== id);
@@ -1958,7 +2098,7 @@ function deleteExpense(id){
   if(id === editExpenseId) cancelExpenseEdit();
   if(USE_FIREBASE){
     if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
-    FB.db.collection("expenses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
+    wcol("expenses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   expenses = expenses.filter(e => e.id !== id);
@@ -2041,7 +2181,7 @@ function deleteSalami(id){
   if(id === editSalamiId) cancelSalamiEdit();
   if(USE_FIREBASE){
     if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
-    FB.db.collection("salami").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
+    wcol("salami").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   salamis = salamis.filter(s => s.id !== id);
@@ -2348,11 +2488,37 @@ function closeWelcome(){
   if(wlFinished) return; wlFinished = true;
   const w = document.getElementById("welcomeScreen");
   w.classList.add("hide");
-  setTimeout(() => { w.style.display = "none"; document.getElementById("wlBg").innerHTML = ""; }, 900);
-  if(USE_FIREBASE && !FB.user) showLogin();
+  setTimeout(() => { if(!wlFinished) return; w.style.display = "none"; document.getElementById("wlBg").innerHTML = ""; }, 900);
+  if(USE_FIREBASE && FB.authResolved && !FB.user) showLogin();
+}
+/* Login nahi hai: welcome foran band, seedha login page */
+function hideWelcomeNow(){
+  wlFinished = true; clearInterval(wlTimer);
+  const w = document.getElementById("welcomeScreen");
+  w.classList.add("hide"); w.style.display = "none";
+  document.getElementById("wlBg").innerHTML = "";
+}
+/* Login ke baad welcome dobara (apne dulha dulhan ke naam ke saath) */
+function reopenWelcome(){
+  const w = document.getElementById("welcomeScreen");
+  clearInterval(wlTimer);
+  wlFinished = false; wlReady = false; wlProgress = 0; wlStart = Date.now();
+  document.getElementById("wlEnter").classList.remove("show");
+  document.getElementById("wlBarFill").style.width = "0%";
+  w.classList.add("wl-wait");
+  w.style.display = "";
+  buildWelcomeAnimations();
+  void w.offsetWidth;
+  w.classList.remove("hide");
+  wlTimer = setInterval(wlTick, 120);
+}
+function welcomeShowCard(){
+  updateWelcomeName();
+  document.getElementById("welcomeScreen").classList.remove("wl-wait");
 }
 
 function startWelcome(){
+  if(USE_FIREBASE) document.getElementById("welcomeScreen").classList.add("wl-wait");
   updateWelcomeName();
   buildWelcomeAnimations();
   wlStart = Date.now();
@@ -2363,7 +2529,10 @@ function startWelcome(){
 /* =====================================================================
    FIREBASE + LOGIN + IJAZAT (permissions)
    ===================================================================== */
-const FB = { db:null, auth:null, user:null, isAdmin:false, perms:{}, name:"", cfg:null, unsubs:[], users:[], needsSetup:false };
+const FB = { db:null, auth:null, user:null, isAdmin:false, perms:{}, name:"", cfg:null, unsubs:[], users:[], wid:null, signingUp:false, authResolved:false };
+/* Har account ki apni shadi: weddings/{ownerUid}/... — kisi ko doosre ka data nazar nahi aata */
+function wdoc(){ return FB.db.collection("weddings").doc(FB.wid); }
+function wcol(col){ return wdoc().collection(col); }
 const PERM_KEYS = ["guests","expenses","daig","salami","view"];
 
 function can(p){ if(!USE_FIREBASE) return true; if(FB.isAdmin) return true; return !!(FB.perms && FB.perms[p]); }
@@ -2381,16 +2550,26 @@ function pageAllowed(id){
 }
 
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-function pinEmail(pin){ return "pin" + String(pin).trim() + "@shadi-hisab.app"; }
 function fbErr(e){
   const c = (e && e.code) || "";
-  if(c.includes("wrong-password") || c.includes("user-not-found") || c.includes("invalid-credential") || c.includes("invalid-login")) return L("PIN غلط ہے", "Wrong PIN");
-  if(c.includes("email-already-in-use")) return L("یہ PIN کسی اور کا ہے، کوئی دوسرا PIN رکھیں", "This PIN belongs to someone else, choose another PIN");
-  if(c.includes("weak-password")) return L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits");
+  if(c.includes("wrong-password") || c.includes("user-not-found") || c.includes("invalid-credential") || c.includes("invalid-login")) return L("یوزر نیم یا پاس ورڈ غلط ہے", "Wrong username or password");
+  if(c.includes("email-already-in-use")) return L("یہ ای میل پہلے سے کسی اکاؤنٹ میں استعمال ہو رہی ہے", "This email is already used by another account");
+  if(c.includes("invalid-email") || c.includes("missing-email")) return L("ای میل درست نہیں", "Invalid email");
+  if(c.includes("weak-password")) return L("پاس ورڈ کم از کم 6 حروف کا ہو", "Password must be at least 6 characters");
   if(c.includes("permission-denied")) return L("اجازت نہیں", "Permission denied");
   if(c.includes("network") || c.includes("unavailable")) return L("انٹرنیٹ نہیں مل رہا", "No internet connection");
   if(c.includes("too-many-requests")) return L("بہت زیادہ کوششیں، تھوڑی دیر بعد کوشش کریں", "Too many attempts, try again later");
   return (e && e.message) ? e.message : L("کچھ غلط ہو گیا", "Something went wrong");
+}
+function cleanUsername(u){ return String(u || "").trim().toLowerCase(); }
+function validUsername(u){ return /^[a-z0-9_.]{3,20}$/.test(u); }
+function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+/* Username ya email se asal email nikalna */
+async function emailFor(idf){
+  idf = String(idf || "").trim();
+  if(idf.includes("@")) return idf;
+  const snap = await FB.db.collection("usernames").doc(cleanUsername(idf)).get();
+  return snap.exists ? (snap.data().email || null) : null;
 }
 
 function loadScript(src){
@@ -2406,57 +2585,108 @@ async function fbInit(){
     FB.db = firebase.firestore();
     try { await FB.db.enablePersistence({ synchronizeTabs:true }); } catch(e){}
     FB.auth = firebase.auth();
+    // login is mobile/computer par yaad rahe (refresh ya app band karne ke baad bhi)
+    try { await FB.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); } catch(e){}
     FB.auth.onAuthStateChanged(onAuth);
   }catch(e){
     document.getElementById("wlStatus").textContent = L("آن لائن سسٹم لوڈ نہیں ہو سکا — انٹرنیٹ چیک کریں", "Could not load the online system — check your internet");
+    FB.authResolved = true;
+    welcomeShowCard();
     appDataReady();
   }
-}
-
-async function readConfig(){
-  try{
-    const snap = await FB.db.collection("config").doc("main").get();
-    FB.cfg = snap.exists ? snap.data() : null;
-  }catch(e){ FB.cfg = FB.cfg || null; }
-  FB.needsSetup = !FB.cfg;
-  applyConfig();
 }
 
 function applyConfig(){
   const c = FB.cfg || {};
-  if(c.title){ try { localStorage.setItem(TITLE_KEY, c.title); } catch(e){} applyTitle(); }
-  if(c.titleEn){ try { localStorage.setItem(TITLE_KEY_EN, c.titleEn); } catch(e){} applyTitle(); }
+  if(c.title){ try { localStorage.setItem(TITLE_KEY, c.title); } catch(e){} }
+  if(FB.cfg){ try { if(c.titleEn) localStorage.setItem(TITLE_KEY_EN, c.titleEn); else localStorage.removeItem(TITLE_KEY_EN); } catch(e){} }
+  applyTitle();
   const set = (id, v) => { const el = document.getElementById(id); if(v != null && document.activeElement !== el) el.value = v; };
   set("basePeoplePerDaig", c.perDaig); set("daigWeightKg", c.daigWeight); set("daigCostPrice", c.daigCost);
   calculateDaig();
-  const t = document.getElementById("lgTitle"); if(t) t.textContent = getTitle();
 }
 
 function stopListeners(){ FB.unsubs.forEach(u => { try{ u(); }catch(e){} }); FB.unsubs = []; }
 
+/* Profile cache: internet der se aaye to bhi user logout na ho */
+function profCacheKey(uid){ return "wp_prof_" + uid; }
+function readProfCache(uid){ try { return JSON.parse(localStorage.getItem(profCacheKey(uid)) || "null"); } catch(e){ return null; } }
+function writeProfCache(uid, d){ try { localStorage.setItem(profCacheKey(uid), JSON.stringify(d)); } catch(e){} }
+function clearProfCache(uid){ try { if(uid) localStorage.removeItem(profCacheKey(uid)); } catch(e){} }
+// get() — sirf asal "mojood nahi" ko "nahi" samjhein; internet/server error par dobara koshish
+async function safeGet(ref){
+  for(let i = 0; i < 3; i++){
+    try { return { ok:true, snap: await ref.get() }; }
+    catch(e){
+      if(e && e.code === "permission-denied") return { ok:true, snap:null };
+      await new Promise(r => setTimeout(r, 1200));
+    }
+  }
+  return { ok:false };
+}
+function accessGone(uid){
+  clearProfCache(uid);
+  alert(L("آپ کی رسائی ختم کر دی گئی ہے یا اکاؤنٹ موجود نہیں", "Your access has been removed or the account does not exist"));
+  FB.auth.signOut();
+}
+
 async function onAuth(user){
+  FB.authResolved = true;
+  if(FB.signingUp) return; // naya account ban raha hai — mukammal hone par khud onAuth chalega
   stopListeners();
-  FB.user = user || null; FB.isAdmin = false; FB.perms = {}; FB.name = "";
+  FB.user = user || null; FB.isAdmin = false; FB.perms = {}; FB.name = ""; FB.wid = null; FB.cfg = null; FB.users = [];
   if(!user){
-    houses = []; expenses = []; salamis = []; FB.users = [];
+    houses = []; expenses = []; salamis = [];
+    // pichle account ka shadi ka naam is device se hata dein
+    try { localStorage.removeItem(TITLE_KEY); localStorage.removeItem(TITLE_KEY_EN); } catch(e){}
+    applyTitle();
     renderTable(); renderExpenses(); renderSalami();
-    await readConfig();
     applyPermissionsUI();
     appDataReady();
-    if(wlFinished) showLogin();
+    hideWelcomeNow();
+    showLogin();
     return;
   }
-  await readConfig();
-  FB.isAdmin = !!(FB.cfg && FB.cfg.adminUid === user.uid);
-  let prof = null;
-  try { const s = await FB.db.collection("users").doc(user.uid).get(); prof = s.exists ? s.data() : null; } catch(e){}
-  if(!FB.isAdmin && !prof){
-    alert(L("آپ کی رسائی ختم کر دی گئی ہے یا اکاؤنٹ موجود نہیں", "Your access has been removed or the account does not exist"));
-    FB.auth.signOut(); return;
-  }
-  FB.perms = (prof && prof.perms) || {};
-  FB.name = (prof && prof.name) || "";
+  // login ho gaya: pehle welcome (naam ke saath), phir app
   hideLogin();
+  if(wlFinished) reopenWelcome();
+  const retryLater = () => setTimeout(() => {
+    if(FB.auth.currentUser && FB.auth.currentUser.uid === user.uid) onAuth(user);
+  }, 5000);
+  const cache = readProfCache(user.uid);
+  const pr = await safeGet(FB.db.collection("users").doc(user.uid));
+  if(FB.user !== user) return;
+  let prof;
+  if(!pr.ok){
+    if(!cache){ welcomeShowCard(); document.getElementById("wlStatus").textContent = L("انٹرنیٹ نہیں مل رہا", "No internet connection"); retryLater(); return; }
+    prof = { weddingId: cache.wid, name: cache.name };
+  } else {
+    prof = (pr.snap && pr.snap.exists) ? pr.snap.data() : null;
+    if(!prof || !prof.weddingId){ accessGone(user.uid); return; }
+  }
+  FB.wid = prof.weddingId;
+  FB.isAdmin = FB.wid === user.uid;
+  if(FB.isAdmin){
+    FB.name = prof.name || "";
+  } else {
+    const mr = await safeGet(wcol("members").doc(user.uid));
+    if(FB.user !== user) return;
+    if(!mr.ok){
+      if(!cache){ retryLater(); return; }
+      FB.perms = cache.perms || {}; FB.name = cache.name || prof.name || "";
+    } else {
+      const mem = (mr.snap && mr.snap.exists) ? mr.snap.data() : null;
+      if(!mem){ accessGone(user.uid); return; }
+      FB.perms = mem.perms || {};
+      FB.name = mem.name || prof.name || "";
+    }
+  }
+  writeProfCache(user.uid, { wid: FB.wid, name: FB.name, perms: FB.perms });
+  const wr = await safeGet(wdoc());
+  if(FB.user !== user) return;
+  FB.cfg = (wr.ok && wr.snap && wr.snap.exists) ? wr.snap.data() : null;
+  applyConfig();
+  welcomeShowCard();
   applyPermissionsUI();
   startListeners();
 }
@@ -2468,15 +2698,19 @@ function startListeners(){
   const sortByTime = arr => arr.sort((a,b) => (a.atMs||0) - (b.atMs||0));
   const clean = d => { const o = {}; for(const k in d){ o[k] = (typeof d[k] === "string") ? esc(d[k]) : d[k]; } return o; };
 
-  FB.unsubs.push(FB.db.collection("config").doc("main").onSnapshot(s => {
+  FB.unsubs.push(wdoc().onSnapshot(s => {
     FB.cfg = s.exists ? s.data() : FB.cfg;
-    if(FB.cfg){ FB.isAdmin = FB.cfg.adminUid === uid; }
     applyConfig(); applyPermissionsUI();
   }, () => {}));
 
   if(!FB.isAdmin){
-    FB.unsubs.push(FB.db.collection("users").doc(uid).onSnapshot(s => {
-      if(!s.exists){ alert(L("آپ کی رسائی ختم کر دی گئی ہے", "Your access has been removed")); FB.auth.signOut(); return; }
+    FB.unsubs.push(wcol("members").doc(uid).onSnapshot(s => {
+      if(!s.exists){
+        if(s.metadata && s.metadata.fromCache) return; // abhi server se jawab nahi aaya
+        clearProfCache(uid);
+        alert(L("آپ کی رسائی ختم کر دی گئی ہے", "Your access has been removed")); FB.auth.signOut(); return;
+      }
+      writeProfCache(uid, { wid: FB.wid, name: s.data().name || "", perms: s.data().perms || {} });
       FB.perms = s.data().perms || {}; FB.name = s.data().name || "";
       applyPermissionsUI(); renderTable(); renderExpenses(); renderSalami();
     }, () => {}));
@@ -2484,7 +2718,7 @@ function startListeners(){
 
   if(canSee("guests") || can("daig")){
     pending++; let first = true;
-    FB.unsubs.push(FB.db.collection("houses").onSnapshot(snap => {
+    FB.unsubs.push(wcol("houses").onSnapshot(snap => {
       houses = sortByTime(snap.docs.map(d => Object.assign(clean(d.data()), { id: d.id })));
       renderTable();
       if(first){ first = false; done(); }
@@ -2493,7 +2727,7 @@ function startListeners(){
 
   if(canSee("expenses")){
     pending++; let first = true;
-    FB.unsubs.push(FB.db.collection("expenses").onSnapshot(snap => {
+    FB.unsubs.push(wcol("expenses").onSnapshot(snap => {
       expenses = sortByTime(snap.docs.map(d => Object.assign(clean(d.data()), { id: d.id })));
       renderExpenses();
       if(first){ first = false; done(); }
@@ -2502,7 +2736,7 @@ function startListeners(){
 
   if(canSee("salami")){
     pending++; let first = true;
-    FB.unsubs.push(FB.db.collection("salami").onSnapshot(snap => {
+    FB.unsubs.push(wcol("salami").onSnapshot(snap => {
       salamis = sortByTime(snap.docs.map(d => Object.assign(clean(d.data()), { id: d.id })));
       renderSalami();
       if(first){ first = false; done(); }
@@ -2510,7 +2744,7 @@ function startListeners(){
   } else { salamis = []; renderSalami(); }
 
   if(FB.isAdmin){
-    FB.unsubs.push(FB.db.collection("users").onSnapshot(snap => {
+    FB.unsubs.push(wcol("members").onSnapshot(snap => {
       FB.users = snap.docs.map(d => Object.assign(clean(d.data()), { uid: d.id }));
       renderUsers();
     }, () => {}));
@@ -2524,7 +2758,7 @@ function fbAdd(col, data){
     atMs: Date.now(), at: firebase.firestore.FieldValue.serverTimestamp()
   });
   // await nahi kiya: internet na ho to bhi entry foran nazar aaye aur baad mein sync ho jaye
-  FB.db.collection(col).add(rec).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
+  wcol(col).add(rec).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
 }
 
 /* Daig settings online save (sirf jis ko ijazat ho) */
@@ -2534,7 +2768,7 @@ function daigSettingChanged(){
   clearTimeout(daigSaveTimer);
   daigSaveTimer = setTimeout(() => {
     const num = id => { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; };
-    FB.db.collection("config").doc("main").set({
+    wdoc().set({
       perDaig: num("basePeoplePerDaig"), daigWeight: num("daigWeightKg"), daigCost: num("daigCostPrice")
     }, { merge:true }).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
   }, 700);
@@ -2579,50 +2813,105 @@ function applyPermissionsUI(){
 function showLogin(){
   if(!USE_FIREBASE || FB.user) return;
   document.getElementById("loginScreen").style.display = "flex";
-  document.getElementById("lgTitle").textContent = getTitle();
-  document.getElementById("lgLoginBox").style.display = FB.needsSetup ? "none" : "block";
-  document.getElementById("lgSetupBox").style.display = FB.needsSetup ? "block" : "none";
-  document.getElementById("lgMsg").textContent = "";
+  showLgBox("login");
 }
 function hideLogin(){ document.getElementById("loginScreen").style.display = "none"; }
 function lgMsg(t, ok){ const m = document.getElementById("lgMsg"); m.textContent = t; m.style.color = ok ? "#2e7d32" : "#c62828"; }
+function showLgBox(which){
+  document.getElementById("lgLoginBox").style.display = which === "login" ? "block" : "none";
+  document.getElementById("lgSignupBox").style.display = which === "signup" ? "block" : "none";
+  document.getElementById("lgForgotBox").style.display = which === "forgot" ? "block" : "none";
+  lgMsg("");
+}
 
 async function doLogin(){
-  const pin = document.getElementById("lgPin").value.trim();
-  if(!pin){ lgMsg(L("PIN ڈالیں", "Enter PIN")); return; }
-  if(!/^\d{6,}$/.test(pin)){ lgMsg(L("PIN غلط ہے", "Wrong PIN")); return; }
+  const idf = document.getElementById("lgUser").value.trim();
+  const pass = document.getElementById("lgPass").value;
+  if(!idf || !pass){ lgMsg(L("یوزر نیم اور پاس ورڈ ڈالیں", "Enter username and password")); return; }
   const b = document.getElementById("lgBtn"); b.disabled = true; lgMsg(L("…چیک ہو رہا ہے", "Checking…"), true);
-  try { await FB.auth.signInWithEmailAndPassword(pinEmail(pin), pin); document.getElementById("lgPin").value = ""; }
-  catch(e){ lgMsg(fbErr(e)); }
+  try {
+    const email = await emailFor(idf);
+    if(!email){ lgMsg(L("یوزر نیم یا پاس ورڈ غلط ہے", "Wrong username or password")); b.disabled = false; return; }
+    await FB.auth.signInWithEmailAndPassword(email, pass);
+    document.getElementById("lgPass").value = "";
+  } catch(e){ lgMsg(fbErr(e)); }
   b.disabled = false;
 }
 
-async function setupAdmin(){
-  const name = document.getElementById("suName").value.trim();
-  const pin = document.getElementById("suPin").value.trim();
-  const pin2 = document.getElementById("suPin2").value.trim();
-  if(!name || !pin){ lgMsg(L("سب خانے بھریں", "Fill in all fields")); return; }
-  if(!/^\d{6,}$/.test(pin)){ lgMsg(L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits")); return; }
-  if(pin !== pin2){ lgMsg(L("دونوں PIN ایک جیسے نہیں", "The two PINs don't match")); return; }
+async function doSignup(){
+  const nameIn = document.getElementById("suName").value.trim();
+  const groomIn = document.getElementById("suGroom").value.trim();
+  const brideIn = document.getElementById("suBride").value.trim();
+  const username = cleanUsername(document.getElementById("suUser").value);
+  const email = document.getElementById("suEmail").value.trim();
+  const pass = document.getElementById("suPass").value;
+  const pass2 = document.getElementById("suPass2").value;
+  if(!nameIn || !groomIn || !brideIn || !username || !email || !pass){ lgMsg(L("سب خانے بھریں", "Fill in all fields")); return; }
+  if(!validUsername(username)){ lgMsg(L("یوزر نیم 3 سے 20 انگریزی حروف/نمبر کا ہو (صرف a-z، 0-9، _ اور .)", "Username must be 3–20 English letters/numbers (only a-z, 0-9, _ and .)")); return; }
+  if(!validEmail(email)){ lgMsg(L("ای میل درست نہیں", "Invalid email")); return; }
+  if(pass.length < 6){ lgMsg(L("پاس ورڈ کم از کم 6 حروف کا ہو", "Password must be at least 6 characters")); return; }
+  if(pass !== pass2){ lgMsg(L("دونوں پاس ورڈ ایک جیسے نہیں", "The two passwords don't match")); return; }
   const b = document.getElementById("suBtn"); b.disabled = true; lgMsg(L("…اکاؤنٹ بن رہا ہے", "Creating account…"), true);
+  let cred = null;
   try{
-    const cred = await FB.auth.createUserWithEmailAndPassword(pinEmail(pin), pin);
+    const taken = await FB.db.collection("usernames").doc(username).get();
+    if(taken.exists){ lgMsg(L("یہ یوزر نیم پہلے سے لیا جا چکا ہے، کوئی اور رکھیں", "This username is already taken, choose another")); b.disabled = false; return; }
+    FB.signingUp = true;
+    cred = await FB.auth.createUserWithEmailAndPassword(email, pass);
     const uid = cred.user.uid;
-    await FB.db.collection("config").doc("main").set({
-      adminUid: uid, title: getTitleUr(), titleEn: getTitleEn() || null,
+    await waitForUrdu(["suGroomUrduPreview", "suBrideUrduPreview"]);
+    const toUr = (raw, prevId) => {
+      const pv = document.getElementById(prevId).innerText.trim();
+      return (LANG !== "en" && pv) ? pv : romanToUrdu(raw);
+    };
+    const groomUr = toUr(groomIn, "suGroomUrduPreview"), brideUr = toUr(brideIn, "suBrideUrduPreview");
+    const latin = /^[\x00-\x7F]+$/.test(groomIn + brideIn);
+    await FB.db.collection("usernames").doc(username).set({ uid, email });
+    await FB.db.collection("users").doc(uid).set({ name: nameIn, username, email, weddingId: uid, role: "owner" });
+    await FB.db.collection("weddings").doc(uid).set({
+      ownerUid: uid,
+      title: groomUr + " اور " + brideUr + " کی شادی",
+      titleEn: latin ? (groomIn + " & " + brideIn + "'s Wedding") : null,
+      groom: groomIn, bride: brideIn,
       perDaig: parseFloat(document.getElementById("basePeoplePerDaig").value) || 80,
       daigWeight: parseFloat(document.getElementById("daigWeightKg").value) || 10,
-      daigCost: parseFloat(document.getElementById("daigCostPrice").value) || null
+      daigCost: null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    await FB.db.collection("users").doc(uid).set({ name, role: "admin", perms: {} });
-    FB.needsSetup = false;
+    FB.signingUp = false;
+    ["suName","suGroom","suBride","suUser","suEmail","suPass","suPass2"].forEach(id => document.getElementById(id).value = "");
+    ["suGroomUrduPreview","suBrideUrduPreview"].forEach(id => document.getElementById(id).innerText = "");
     onAuth(cred.user);
-  }catch(e){ lgMsg(fbErr(e)); }
+  }catch(e){
+    FB.signingUp = false;
+    // adhoora account na rahe
+    if(cred && cred.user){ try { await cred.user.delete(); } catch(x){ try { await FB.auth.signOut(); } catch(y){} } }
+    lgMsg(fbErr(e));
+  }
+  b.disabled = false;
+}
+
+async function doForgot(){
+  const idf = document.getElementById("fgUser").value.trim();
+  if(!idf){ lgMsg(L("یوزر نیم یا ای میل لکھیں", "Enter your username or email")); return; }
+  const b = document.getElementById("fgBtn"); b.disabled = true; lgMsg(L("…بھیجا جا رہا ہے", "Sending…"), true);
+  try{
+    const email = await emailFor(idf);
+    if(email) await FB.auth.sendPasswordResetEmail(email);
+    // account ho ya na ho, ek hi jawab (taake koi doosron ke account na dhoond sake)
+    lgMsg(L("اگر یہ اکاؤنٹ موجود ہے تو پاس ورڈ بدلنے کا لنک اس کی ای میل پر بھیج دیا گیا ہے۔ اسپیم فولڈر بھی دیکھیں۔", "If this account exists, a password reset link has been sent to its email. Check the spam folder too."), true);
+    document.getElementById("fgUser").value = "";
+  }catch(e){
+    const c = (e && e.code) || "";
+    if(c.includes("user-not-found")) lgMsg(L("اگر یہ اکاؤنٹ موجود ہے تو پاس ورڈ بدلنے کا لنک اس کی ای میل پر بھیج دیا گیا ہے۔ اسپیم فولڈر بھی دیکھیں۔", "If this account exists, a password reset link has been sent to its email. Check the spam folder too."), true);
+    else lgMsg(fbErr(e));
+  }
   b.disabled = false;
 }
 
 function fbLogout(){
   if(!confirm(L("لاگ آؤٹ کریں؟", "Log out?"))) return;
+  if(FB.user) clearProfCache(FB.user.uid);
   FB.auth.signOut();
 }
 
@@ -2631,44 +2920,60 @@ async function createUserAccount(){
   if(!FB.isAdmin) return;
   await waitForUrdu(["nuNameUrduPreview"]);
   const name = document.getElementById("nuNameUrduPreview").innerText.trim() || document.getElementById("nuName").value.trim();
-  const pin = document.getElementById("nuPin").value.trim();
+  const username = cleanUsername(document.getElementById("nuUser").value);
+  const email = document.getElementById("nuEmail").value.trim();
+  const pass = document.getElementById("nuPass").value;
   const perms = {}; PERM_KEYS.forEach(k => perms[k] = document.getElementById("nuP_" + k).checked);
-  if(!name || !pin){ alert(L("نام اور PIN دونوں ڈالیں", "Enter both name and PIN")); return; }
-  if(!/^\d{6,}$/.test(pin)){ alert(L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits")); return; }
+  if(!name || !username || !email || !pass){ alert(L("نام، یوزر نیم، ای میل اور پاس ورڈ سب ڈالیں", "Enter name, username, email and password")); return; }
+  if(!validUsername(username)){ alert(L("یوزر نیم 3 سے 20 انگریزی حروف/نمبر کا ہو (صرف a-z، 0-9، _ اور .)", "Username must be 3–20 English letters/numbers (only a-z, 0-9, _ and .)")); return; }
+  if(!validEmail(email)){ alert(L("ای میل درست نہیں", "Invalid email")); return; }
+  if(pass.length < 6){ alert(L("پاس ورڈ کم از کم 6 حروف کا ہو", "Password must be at least 6 characters")); return; }
   if(!PERM_KEYS.some(k => perms[k])){ alert(L("کم از کم ایک اجازت منتخب کریں", "Select at least one permission")); return; }
   const b = document.getElementById("nuBtn"); b.disabled = true;
+  let sec = null, cred = null;
   try{
+    const taken = await FB.db.collection("usernames").doc(username).get();
+    if(taken.exists){ alert(L("یہ یوزر نیم پہلے سے لیا جا چکا ہے، کوئی اور رکھیں", "This username is already taken, choose another")); b.disabled = false; return; }
     // doosri Firebase app taake admin khud logout na ho
-    const sec = firebase.apps.find(a => a.name === "secondary") || firebase.initializeApp(firebaseConfig, "secondary");
-    const cred = await sec.auth().createUserWithEmailAndPassword(pinEmail(pin), pin);
-    await FB.db.collection("users").doc(cred.user.uid).set({ name, role: "user", perms });
+    sec = firebase.apps.find(a => a.name === "secondary") || firebase.initializeApp(firebaseConfig, "secondary");
+    cred = await sec.auth().createUserWithEmailAndPassword(email, pass);
+    const uid = cred.user.uid;
+    const sdb = sec.firestore();
+    await sdb.collection("usernames").doc(username).set({ uid, email });
+    await sdb.collection("users").doc(uid).set({ name, username, email, weddingId: FB.wid, role: "member" });
+    await wcol("members").doc(uid).set({ name, username, email, perms });
     await sec.auth().signOut();
-    alert(L("✔ صارف بن گیا\nنام: ", "✔ User created\nName: ") + name + "\nPIN: " + pin + L("\nیہ PIN اسے بتا دیں", "\nTell them this PIN"));
-    ["nuName","nuPin"].forEach(id => document.getElementById(id).value = "");
+    alert(L("✔ صارف بن گیا\nنام: ", "✔ User created\nName: ") + name + L("\nیوزر نیم: ", "\nUsername: ") + username + L("\nپاس ورڈ: ", "\nPassword: ") + pass + L("\nیہ یوزر نیم اور پاس ورڈ اسے بتا دیں", "\nTell them this username and password"));
+    ["nuName","nuUser","nuEmail","nuPass"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("nuNameUrduPreview").innerText = "";
     PERM_KEYS.forEach(k => document.getElementById("nuP_" + k).checked = false);
-  }catch(e){ alert(fbErr(e)); }
+  }catch(e){
+    if(cred && cred.user){ try { await cred.user.delete(); } catch(x){} }
+    if(sec){ try { await sec.auth().signOut(); } catch(x){} }
+    alert(fbErr(e));
+  }
   b.disabled = false;
 }
 
 function renderUsers(){
   const tb = document.getElementById("usersTable"); if(!tb) return;
-  const list = FB.users.filter(x => x.role !== "admin");
-  if(!list.length){ tb.innerHTML = `<tr><td colspan="7">${L("ابھی کوئی صارف نہیں","No users yet")}</td></tr>`; return; }
+  const list = FB.users;
+  if(!list.length){ tb.innerHTML = `<tr><td colspan="8">${L("ابھی کوئی صارف نہیں","No users yet")}</td></tr>`; return; }
   tb.innerHTML = list.map((x,i) => `
     <tr>
       <td><b class="nm nm${i % 6}">${x.name}</b></td>
+      <td class="ltr">${x.username || "—"}</td>
       ${PERM_KEYS.map(k => `<td><input type="checkbox" ${x.perms && x.perms[k] ? "checked" : ""} onchange="setUserPerm('${x.uid}','${k}',this.checked)"></td>`).join("")}
       <td><button class="btn-danger" onclick="removeUser('${x.uid}')">${L("ختم کریں","Remove")}</button></td>
     </tr>`).join("");
 }
 function setUserPerm(uid, key, val){
   const upd = {}; upd["perms." + key] = val;
-  FB.db.collection("users").doc(uid).update(upd).catch(e => alert(fbErr(e)));
+  wcol("members").doc(uid).update(upd).catch(e => alert(fbErr(e)));
 }
 function removeUser(uid){
   if(!confirm(L("اس صارف کی رسائی ختم کریں؟ وہ دوبارہ داخل نہیں ہو سکے گا۔", "Remove this user's access? They will not be able to sign in again."))) return;
-  FB.db.collection("users").doc(uid).delete().catch(e => alert(fbErr(e)));
+  wcol("members").doc(uid).delete().catch(e => alert(fbErr(e)));
 }
 
 /* ---------- Purana local data online bhejna ---------- */
@@ -2698,13 +3003,11 @@ async function migrateLocalData(){
 }
 
 /* ================= CONTACT US =================
-   Apna WhatsApp number, phone aur email yahan likhein:
-   whatsapp: country code ke saath, + ke baghair, e.g. "923001234567"
+   Apna phone aur email yahan likhein:
    phone:    e.g. "+923001234567"
    email:    e.g. "support@example.com"
-   Jo khaali chhorein, us ka button nazar nahi aayega (WhatsApp ka button hamesha rahega). */
+   Jo khaali chhorein, us ka button nazar nahi aayega. Live chat (Tawk.to) hamesha rahegi. */
 const CONTACT = {
-  whatsapp: "",
   phone: "",
   email: ""
 };
@@ -2716,10 +3019,52 @@ function contactText(){
   if(msg) t += "\n" + msg;
   return t;
 }
-function contactWhatsApp(){
-  const n = String(CONTACT.whatsapp || "").replace(/\D/g, "");
-  if(!n){ alert(L("رابطہ نمبر ابھی سیٹ نہیں ہوا", "Contact number is not set yet")); return; }
-  window.open("https://wa.me/" + n + "?text=" + encodeURIComponent(contactText()), "_blank");
+/* ================= LIVE CHAT (Tawk.to) — app ke andar =================
+   Chat ka gol button chhupa rehta hai; "Live Chat" dabane par chat app ke andar khulti hai.
+   Aap Tawk.to ki mobile app / website se jawab dete hain. */
+const TAWK_SRC = "https://embed.tawk.to/6ac92d2d8a84c634bf6d45d3/1k4gtgus3";
+var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+let tawkLoaded = false, tawkRequested = false, tawkOpenWhenReady = false;
+Tawk_API.onLoad = function(){
+  tawkLoaded = true;
+  try {
+    if(tawkOpenWhenReady){ tawkOpenWhenReady = false; showTawkChat(); }
+    else if(!(Tawk_API.isChatOngoing && Tawk_API.isChatOngoing())) Tawk_API.hideWidget();
+  } catch(e){}
+};
+// chat chhoti karne par gol button phir chhup jaye
+Tawk_API.onChatMinimized = function(){ try { Tawk_API.hideWidget(); } catch(e){} };
+// aap ka jawab aaye to button nazar aa jaye (naya message dikhane ke liye)
+Tawk_API.onChatMessageAgent = function(){ try { Tawk_API.showWidget(); } catch(e){} };
+function loadTawk(){
+  if(tawkRequested) return;
+  tawkRequested = true;
+  const s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+  s1.async = true; s1.src = TAWK_SRC; s1.charset = "UTF-8"; s1.setAttribute("crossorigin", "*");
+  s1.onerror = function(){ tawkRequested = false; };
+  s0.parentNode.insertBefore(s1, s0);
+}
+function showTawkChat(){
+  const name = document.getElementById("ctName").value.trim();
+  const msg = document.getElementById("ctMsg").value.trim();
+  const attrs = {};
+  if(name) attrs.name = name;
+  if(msg) attrs["issue"] = msg.slice(0, 250);
+  attrs["app"] = String(getTitle()).slice(0, 250);
+  try { Tawk_API.setAttributes(attrs, function(){}); } catch(e){}
+  try { Tawk_API.showWidget(); Tawk_API.maximize(); } catch(e){}
+}
+function openLiveChat(){
+  if(tawkLoaded){ showTawkChat(); return; }
+  tawkOpenWhenReady = true;
+  loadTawk();
+  const btn = document.getElementById("ctChatBtn");
+  const old = btn.textContent;
+  btn.textContent = L("…چیٹ کھل رہی ہے", "Opening chat…");
+  setTimeout(function(){
+    btn.textContent = old;
+    if(!tawkLoaded){ tawkOpenWhenReady = false; alert(L("چیٹ نہیں کھل سکی — انٹرنیٹ چیک کر کے دوبارہ کوشش کریں", "Chat could not open — check your internet and try again")); }
+  }, 15000);
 }
 function contactCall(){
   const n = String(CONTACT.phone || "").replace(/[^\d+]/g, "");
@@ -2741,6 +3086,7 @@ if(USE_FIREBASE){ houses = []; expenses = []; salamis = []; }
 collectI18n();
 applyLanguage();
 applyContactButtons();
+setTimeout(loadTawk, 3000);
 applyTitle();
 document.getElementById("expDate").value = new Date().toISOString().split('T')[0];
 updateAutoTime();
