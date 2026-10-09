@@ -7,6 +7,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gulzar&family=Playfair+Display:wght@600;700&family=Great+Vibes&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root{
   --gold:#c99a2e;
@@ -174,6 +175,8 @@ button{cursor:pointer}
   font-family:Arial, sans-serif;
   transition: border-color 0.2s ease;
 }
+.field textarea{width:100%;border:1.5px solid #dce6e1;background:#fbfdfc;border-radius:14px;padding:11px 14px;outline:none;color:var(--ink);font-size:15px;font-family:"Poppins",Arial,"Noto Nastaliq Urdu",sans-serif;line-height:1.8;resize:vertical}
+.field textarea:focus{border-color:#ec407a;box-shadow:0 0 0 4px rgba(236,64,122,.16);background:#fff}
 .field input:focus{
   border-color: var(--green2);
   background: #fff;
@@ -212,6 +215,7 @@ button{cursor:pointer}
 .btn-primary:active{transform: scale(0.98);}
 .btn-secondary{background:#edf2ef;color:var(--green)}
 .btn-danger{background:#fde8e8;color:var(--danger);padding:4px 8px;font-size:12px;border-radius:8px;border:0}
+.btn-edit{background:#e8f0fe;color:#1a56b0;padding:4px 8px;font-size:12px;border-radius:8px;border:0;margin-inline-end:4px}
 
 /* Tables & Search */
 .search{width:100%;border:1.5px solid #dce6e1;border-radius:12px;padding:10px 12px;background:#fff;outline:none;font-size:15px;margin-bottom:10px;direction:rtl;font-family:"Noto Nastaliq Urdu", serif;}
@@ -578,7 +582,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
 }
 .lg-btn:disabled{opacity:.6}
 .lg-msg{min-height:24px; margin-top:10px; font-size:13px; color:#c62828}
-.user-chip{margin-right:auto; display:flex; align-items:center; gap:8px; font-size:13px; color:#6a1b9a; font-weight:700}
+.user-chip{display:flex; align-items:center; gap:8px; font-size:13px; color:#6a1b9a; font-weight:700}
 .logout-btn{border:0; border-radius:10px; padding:5px 12px; background:#fdeef5; color:#ad1457; font-weight:700; font-size:12px}
 .perm-box{margin-top:12px; padding:12px; border-radius:16px; background:linear-gradient(135deg,#fff3f8,#f6efff); border:1px dashed rgba(171,71,188,.4)}
 .perm-title{font-weight:700; color:#6a1b9a; margin-bottom:6px}
@@ -697,6 +701,63 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
   #welcomeScreen *{animation-duration:0s!important; animation-iteration-count:1!important}
 }
 @media print{ #welcomeScreen{display:none!important} }
+
+/* ================= LANGUAGE BUTTON + ENGLISH MODE ================= */
+.topbar{flex-wrap:wrap}
+.lang-btn{margin-inline-start:auto;border:1px solid rgba(171,71,188,.35);border-radius:10px;padding:5px 12px;background:#fff;color:#6a1b9a;font-weight:700;font-size:13px;font-family:"Segoe UI",Roboto,Arial,"Noto Nastaliq Urdu",sans-serif;cursor:pointer}
+.lg-lang{margin:0 0 6px}
+html[lang=en] body, html[lang=en] #loginScreen, html[lang=en] #welcomeScreen{
+  direction:ltr; text-align:left;
+  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Nastaliq Urdu",sans-serif;
+}
+html[lang=en] .search{direction:ltr;font-family:inherit}
+html[lang=en] #bcMeethaType{direction:ltr!important;text-align:left!important;font-family:inherit!important}
+html[lang=en] .urdu-preview{display:none!important}
+html[lang=en] .menu-item{text-align:left}
+html[lang=en] .menu-dropdown{right:auto;left:0}
+html[lang=en] .title-edit{text-align:left}
+html[lang=en] .perm{margin:4px 16px 4px 0}
+html[lang=en] .header h1{line-height:1.4}
+@media screen and (max-width:620px){ html[lang=en] .menu-dropdown{right:0;left:0} }
+@media print{
+  html[lang=en] #printReport{direction:ltr;text-align:left;font-family:Arial,"Noto Nastaliq Urdu",sans-serif}
+  html[lang=en] .cutout-card-single{text-align:left}
+  .lang-btn{display:none!important}
+}
+
+/* ================= STYLISH FONTS (sirf screen par, print par asar nahi) ================= */
+@media screen{
+  /* Urdu headings: Gulzar (khoobsurat Nastaliq) */
+  html:not([lang=en]) .header h1,
+  html:not([lang=en]) .wl-mubarak,
+  html:not([lang=en]) .wl-name,
+  html:not([lang=en]) .lg-title,
+  html:not([lang=en]) .dash-title,
+  html:not([lang=en]) .card-title,
+  html:not([lang=en]) .topbar-title{
+    font-family:"Gulzar","Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif; font-weight:400;
+  }
+  /* English: Poppins body, Playfair headings, Great Vibes for Mubarak */
+  html[lang=en] body, html[lang=en] #loginScreen, html[lang=en] #welcomeScreen{
+    font-family:"Poppins","Segoe UI",Roboto,Arial,"Noto Nastaliq Urdu",sans-serif;
+  }
+  html[lang=en] .header h1,
+  html[lang=en] .wl-name,
+  html[lang=en] .lg-title,
+  html[lang=en] .dash-title,
+  html[lang=en] .card-title{
+    font-family:"Playfair Display",Georgia,"Noto Nastaliq Urdu",serif; letter-spacing:.3px;
+  }
+  html[lang=en] .wl-mubarak{font-family:"Great Vibes","Playfair Display",cursive; font-weight:400; font-size:54px; line-height:1.3}
+  /* Numbers & raqam: Poppins (dono zubanon mein) */
+  .dash-card b, .sal-box b, .ltr,
+  #calcDaigsNeeded, #calcTotalKg, #calcTotalCost{font-family:"Poppins",Arial,sans-serif!important}
+  .field input, .title-edit input, .lg-card input{font-family:"Poppins",Arial,sans-serif}
+  .lang-btn{font-family:"Poppins","Segoe UI",Arial,"Noto Nastaliq Urdu",sans-serif}
+}
+@media screen and (max-width:620px){
+  html[lang=en] .wl-mubarak{font-size:44px}
+}
 </style>
 </head>
 
@@ -724,6 +785,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
 <!-- ================= LOGIN (sirf Firebase ke saath) ================= -->
 <div id="loginScreen" style="display:none">
   <div class="lg-card">
+    <button type="button" class="lang-btn lg-lang" id="langBtnLogin" onclick="toggleLang()">🌐 English</button>
     <div class="lg-icon">💍</div>
     <div class="lg-title" id="lgTitle">محمد صدیق کی شادی</div>
 
@@ -766,6 +828,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
   <div class="topbar" id="topbar">
     <button type="button" class="menu-toggle" id="menuToggle" onclick="toggleMenu(event)">☰ <span>مینو</span></button>
     <div class="topbar-title" id="currentPageName">📊 ڈیش بورڈ</div>
+    <button type="button" class="lang-btn" id="langBtn" onclick="toggleLang()">🌐 English</button>
     <div class="user-chip" id="userChip" style="display:none">
       <span id="userChipName"></span>
       <button type="button" class="logout-btn" onclick="fbLogout()">لاگ آؤٹ</button>
@@ -777,6 +840,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
       <button type="button" class="menu-item" data-page="expensePage" onclick="menuGo('expensePage')">💰 <span>اخراجات</span></button>
       <button type="button" class="menu-item" data-page="salamiPage" onclick="menuGo('salamiPage')">🎁 <span>سلامی و تحائف</span></button>
       <button type="button" class="menu-item" data-page="usersPage" onclick="menuGo('usersPage')" style="display:none">👥 <span>صارفین اور اجازت</span></button>
+      <button type="button" class="menu-item" data-page="contactPage" onclick="menuGo('contactPage')">📞 <span>رابطہ کریں</span></button>
     </div>
   </div>
 
@@ -829,12 +893,17 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
         <input id="note" type="text" placeholder="e.g. Bachon samet">
       </div>
       <div class="actions">
-        <button class="btn btn-primary" onclick="saveHouse()">➕ گھرانہ شامل کریں</button>
+        <button class="btn btn-primary" id="houseSaveBtn" onclick="saveHouse()">➕ گھرانہ شامل کریں</button>
+        <button class="btn btn-secondary" id="houseCancelBtn" onclick="cancelHouseEdit()" style="display:none">منسوخ</button>
       </div>
     </section>
 
     <section class="card">
       <div class="card-title">📋 گھرانوں کی فہرست</div>
+      <div class="sal-summary" id="guestTotals" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px">
+        <div class="sal-box"><span>🏠</span><b id="guestTotalHouses">0</b><small>کل گھر</small></div>
+        <div class="sal-box"><span>👥</span><b id="guestTotalPeople">0</b><small>کل افراد</small></div>
+      </div>
       <input class="search" id="search" type="search" placeholder="🔎 نام یا پتہ تلاش کریں..." oninput="renderTable()">
       <div class="table-wrap">
         <table id="houseTableMain">
@@ -845,7 +914,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
               <th>پتہ</th>
               <th>افراد</th>
               <th>نوٹ</th>
-              <th>حذف</th>
+              <th>ترمیم / حذف</th>
             </tr>
           </thead>
           <tbody id="houseTable"></tbody>
@@ -900,6 +969,64 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
         </div>
       </div>
     </section>
+
+    <!-- BACHAT KA HISAB -->
+    <section class="card" id="bachatCard">
+      <div class="card-title">💡 بچت کا حساب — کون سا گوشت، کتنی دیگیں، اور میٹھا</div>
+      <div class="hint" style="margin-top:0">ہر گوشت کی فی دیگ قیمت لکھیں۔ میٹھا ساتھ ہو تو لوگ سالن / بریانی کم کھاتے ہیں، اس لیے گوشت کی دیگیں کم لگتی ہیں۔ سسٹم بتائے گا کس میں سب سے زیادہ بچت ہے۔</div>
+
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field">
+          <label for="bcChicken">🐔 چکن — فی دیگ قیمت (Rs.)</label>
+          <input id="bcChicken" type="number" min="0" value="15000" oninput="bachatChanged()">
+        </div>
+        <div class="field">
+          <label for="bcBeef">🐄 بیف — فی دیگ قیمت (Rs.)</label>
+          <input id="bcBeef" type="number" min="0" value="22000" oninput="bachatChanged()">
+        </div>
+        <div class="field">
+          <label for="bcMutton">🐐 مٹن — فی دیگ قیمت (Rs.)</label>
+          <input id="bcMutton" type="number" min="0" value="35000" oninput="bachatChanged()">
+        </div>
+        <div class="field">
+          <label for="bcMeethaType">🍮 میٹھا کون سا؟</label>
+          <select id="bcMeethaType" onchange="bachatChanged()" style="direction:rtl;text-align:right;font-family:'Noto Nastaliq Urdu',serif">
+            <option value="زردہ">زردہ</option>
+            <option value="کھیر">کھیر</option>
+            <option value="فیرنی">فیرنی</option>
+            <option value="حلوہ">حلوہ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bcMeethaPrice">میٹھا — فی دیگ قیمت (Rs.)</label>
+          <input id="bcMeethaPrice" type="number" min="0" value="9000" oninput="bachatChanged()">
+        </div>
+        <div class="field">
+          <label for="bcMeethaPeople">میٹھے کی ایک دیگ کتنے افراد کو کافی؟</label>
+          <input id="bcMeethaPeople" type="number" min="1" value="150" oninput="bachatChanged()">
+        </div>
+        <div class="field">
+          <label for="bcMeethaCut">میٹھا ہو تو گوشت کتنا کم لگے گا؟ (%)</label>
+          <input id="bcMeethaCut" type="number" min="0" max="50" value="15" oninput="bachatChanged()">
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table id="bachatTableMain">
+          <thead>
+            <tr>
+              <th>مینو</th>
+              <th>گوشت کی دیگیں</th>
+              <th>میٹھے کی دیگیں</th>
+              <th>کل خرچہ</th>
+              <th>بچت</th>
+            </tr>
+          </thead>
+          <tbody id="bachatTable"></tbody>
+        </table>
+      </div>
+      <div id="bachatBest" style="margin-top:12px;padding:12px;border-radius:14px;background:linear-gradient(135deg,#fff3f8,#f6efff);border:1px dashed rgba(171,71,188,.4);font-weight:700;line-height:2;color:#6a1b9a"></div>
+    </section>
   </main>
 
   <!-- EXPENSES PAGE -->
@@ -936,7 +1063,8 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
         <div class="urdu-preview" id="detailUrduPreview"></div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" onclick="saveExpense()">➕ خرچہ شامل کریں</button>
+        <button class="btn btn-primary" id="expSaveBtn" onclick="saveExpense()">➕ خرچہ شامل کریں</button>
+        <button class="btn btn-secondary" id="expCancelBtn" onclick="cancelExpenseEdit()" style="display:none">منسوخ</button>
       </div>
     </section>
 
@@ -950,7 +1078,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
               <th>کیٹیگری</th>
               <th>تفصیل</th>
               <th>رقم</th>
-              <th>حذف</th>
+              <th>ترمیم / حذف</th>
             </tr>
           </thead>
           <tbody id="expenseTable"></tbody>
@@ -990,7 +1118,8 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
       </div>
       <div class="hint">رقم یا تحفے کی تفصیل — دونوں میں سے کم از کم ایک لازمی ہے۔ رقم خالی چھوڑنی ہو تو تحفے کی تفصیل ضرور لکھیں۔</div>
       <div class="actions">
-        <button class="btn btn-primary" onclick="saveSalami()">➕ سلامی / تحفہ شامل کریں</button>
+        <button class="btn btn-primary" id="salSaveBtn" onclick="saveSalami()">➕ سلامی / تحفہ شامل کریں</button>
+        <button class="btn btn-secondary" id="salCancelBtn" onclick="cancelSalamiEdit()" style="display:none">منسوخ</button>
       </div>
     </section>
 
@@ -1006,7 +1135,7 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
               <th>پتہ</th>
               <th>رقم</th>
               <th>تحفہ / تفصیل</th>
-              <th>حذف</th>
+              <th>ترمیم / حذف</th>
             </tr>
           </thead>
           <tbody id="salamiTable"></tbody>
@@ -1023,6 +1152,29 @@ td{border-bottom:1px solid #f0eaf7;padding:8px 6px;text-align:center;font-size:1
       </div>
       <div class="sal-gift-title">🎁 کون کون سے تحائف ملے:</div>
       <div class="sal-gift-list" id="salGiftList"></div>
+    </section>
+  </main>
+
+  <!-- CONTACT US PAGE -->
+  <main id="contactPage" class="page" style="display:none">
+    <section class="card">
+      <div class="card-title">📞 ہم سے رابطہ کریں</div>
+      <div class="hint" style="margin-top:0">ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا پیغام لکھیں اور واٹس ایپ کا بٹن دبائیں۔</div>
+      <div class="field" style="margin-top:12px">
+        <label for="ctName">آپ کا نام</label>
+        <input id="ctName" type="text" dir="auto" placeholder="e.g. Adnan">
+      </div>
+      <div class="field" style="margin-top:10px">
+        <label for="ctMsg">آپ کا پیغام / مسئلہ</label>
+        <textarea id="ctMsg" rows="4" dir="auto" placeholder="اپنا مسئلہ یا تبدیلی یہاں لکھیں…"></textarea>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" onclick="contactWhatsApp()">💬 واٹس ایپ پر لائیو چیٹ</button>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-secondary" id="ctCallBtn" style="flex:1" onclick="contactCall()">📞 کال کریں</button>
+        <button type="button" class="btn btn-secondary" id="ctEmailBtn" style="flex:1" onclick="contactEmail()">✉️ ای میل کریں</button>
+      </div>
     </section>
   </main>
 
@@ -1093,6 +1245,77 @@ const firebaseConfig = {
   appId: ""
 };
 const USE_FIREBASE = !!(firebaseConfig.apiKey && firebaseConfig.projectId);
+/* ================= ZUBAN (URDU / ENGLISH) =================
+   Har mobile/computer apni zuban yaad rakhta hai. */
+const LANG_KEY = "sadiq_wedding_lang_v1";
+let LANG = "ur";
+try { LANG = localStorage.getItem(LANG_KEY) === "en" ? "en" : "ur"; } catch(e){}
+function L(ur, en){ return LANG === "en" ? en : ur; }
+const I18N_EN = {"رابطہ کریں": "Contact Us", "📞 ہم سے رابطہ کریں": "📞 Contact Us", "ایپ میں کوئی مسئلہ ہو یا کوئی تبدیلی چاہیے تو ہم سے براہِ راست بات کریں۔ اپنا پیغام لکھیں اور واٹس ایپ کا بٹن دبائیں۔": "If you face any issue in the app or want a change, talk to us directly. Write your message and tap the WhatsApp button.", "آپ کا نام": "Your name", "آپ کا پیغام / مسئلہ": "Your message / issue", "اپنا مسئلہ یا تبدیلی یہاں لکھیں…": "Write your issue or change here…", "💬 واٹس ایپ پر لائیو چیٹ": "💬 Live chat on WhatsApp", "📞 کال کریں": "📞 Call", "✉️ ای میل کریں": "✉️ Email", "شادی مبارک": "Wedding Mubarak", "اللہ پاک یہ نیا سفر محبت، خوشیوں اور برکتوں سے بھر دے": "May Allah fill this new journey with love, happiness and blessings", "✨ شروع کریں": "✨ Start", "داخل ہونے کے لیے اپنا PIN ڈالیں": "Enter your PIN to sign in", "🔓 داخل ہوں": "🔓 Sign in", "پہلی بار: ایڈمن (آپ) کا اکاؤنٹ بنائیں": "First time: create the admin (your) account", "آپ کا نام (e.g. Adnan)": "Your name (e.g. Adnan)", "PIN (کم از کم 6 ہندسے)": "PIN (at least 6 digits)", "PIN دوبارہ": "PIN again", "👑 ایڈمن اکاؤنٹ بنائیں": "👑 Create admin account", "✏️ نام بدلیں": "✏️ Change name", "✔️ محفوظ کریں": "✔️ Save", "منسوخ": "Cancel", "مہمانوں، دیگوں اور اخراجات کا مکمل حساب": "Complete record of guests, daigs and expenses", "مینو": "Menu", "لاگ آؤٹ": "Log out", "ڈیش بورڈ": "Dashboard", "مہمانوں کی فہرست": "Guest List", "دیگوں کا حساب": "Daig Calculator", "اخراجات": "Expenses", "سلامی و تحائف": "Salami & Gifts", "صارفین اور اجازت": "Users & Permissions", "📊 شادی کا مرکزی ڈیش بورڈ": "📊 Wedding Dashboard", "مہمانوں کی فہرست — کل گھرانے": "Guest List — Total households", "کھولیں ←": "Open →", "دیگوں کا حساب — مطلوبہ دیگیں": "Daig Calculator — Daigs needed", "اخراجات — کل خرچہ": "Expenses — Total spent", "سلامی و تحائف — کل نقد": "Salami & Gifts — Total cash", "🖨️ ڈیش بورڈ اور اخراجات خلاصہ پرنٹ کریں": "🖨️ Print dashboard & expense summary", "🖨️ نارمل فہرست پرنٹ کریں": "🖨️ Print normal list", "✂️ لیبل پرنٹ کریں (نام و پتہ)": "✂️ Print labels (name & address)", "📖 بک لیٹ فہرست (زیادہ نام)": "📖 Booklet list (more names)", "🏠 نیا گھرانہ شامل کریں": "🏠 Add new household", "گھر کے سربراہ کا نام (English / Roman Urdu)": "Head of household name", "افراد کی تعداد": "Number of people", "مثلاً: 5": "e.g. 5", "پتہ (English / Roman Urdu)": "Address", "نوٹ (اختیاری)": "Note (optional)", "➕ گھرانہ شامل کریں": "➕ Add household", "📋 گھرانوں کی فہرست": "📋 Household List", "کل گھر": "Total households", "کل افراد": "Total people", "🔎 نام یا پتہ تلاش کریں...": "🔎 Search name or address...", "نمبر": "No.", "سربراہ کا نام": "Head of household", "پتہ": "Address", "افراد": "People", "نوٹ": "Note", "ترمیم / حذف": "Edit / Delete", "🍲 دیگوں کا حساب پرنٹ کریں": "🍲 Print daig calculation", "🍲 دیگوں اور کھانے کا تخمینہ و حساب": "🍲 Daig & Food Estimate", "کل افراد (خودکار)": "Total people (automatic)", "ایک دیگ کتنے افراد کے لیے کافی ہے؟": "How many people does one daig serve?", "ایک دیگ کا سائز (کلو چاول / گوشت)": "Size of one daig (kg rice / meat)", "فی دیگ متوقع قیمت / لاگت (Rs.)": "Expected cost per daig (Rs.)", "مثلاً: 18000": "e.g. 18000", "📊 کھانے اور دیگوں کی مکمل تفصیل:": "📊 Full food & daig details:", "مطلوبہ دیگیں": "Daigs needed", "کل چاول / گوشت (کلو)": "Total rice / meat (kg)", "کل متوقع لاگت": "Total expected cost", "💡 بچت کا حساب — کون سا گوشت، کتنی دیگیں، اور میٹھا": "💡 Savings Calculator — which meat, how many daigs, and dessert", "ہر گوشت کی فی دیگ قیمت لکھیں۔ میٹھا ساتھ ہو تو لوگ سالن / بریانی کم کھاتے ہیں، اس لیے گوشت کی دیگیں کم لگتی ہیں۔ سسٹم بتائے گا کس میں سب سے زیادہ بچت ہے۔": "Enter the price per daig for each meat. When dessert is served people eat less curry / biryani, so fewer meat daigs are needed. The system shows which option saves the most.", "🐔 چکن — فی دیگ قیمت (Rs.)": "🐔 Chicken — price per daig (Rs.)", "🐄 بیف — فی دیگ قیمت (Rs.)": "🐄 Beef — price per daig (Rs.)", "🐐 مٹن — فی دیگ قیمت (Rs.)": "🐐 Mutton — price per daig (Rs.)", "🍮 میٹھا کون سا؟": "🍮 Which dessert?", "زردہ": "Zarda", "کھیر": "Kheer", "فیرنی": "Firni", "حلوہ": "Halwa", "میٹھا — فی دیگ قیمت (Rs.)": "Dessert — price per daig (Rs.)", "میٹھے کی ایک دیگ کتنے افراد کو کافی؟": "How many people does one dessert daig serve?", "میٹھا ہو تو گوشت کتنا کم لگے گا؟ (%)": "With dessert, how much less meat is needed? (%)", "گوشت کی دیگیں": "Meat daigs", "میٹھے کی دیگیں": "Dessert daigs", "کل خرچہ": "Total cost", "بچت": "Savings", "💰 مکمل اخراجات کی تفصیل پرنٹ کریں": "💰 Print full expense details", "💰 نیا خرچہ درج کریں": "💰 Add new expense", "تاریخ (اپنی مرضی سے بدلیں)": "Date (change if needed)", "وقت (خودکار سیٹ)": "Time (set automatically)", "کیٹیگری (English / Roman Urdu)": "Category", "رقم (Rs.)": "Amount (Rs.)", "مثلاً: 25000": "e.g. 25000", "تفصیل / سامان کی معلومات (English / Roman Urdu)": "Details / items", "مثلاً: 5 daigein Farooq dukan se": "e.g. 5 daigs from Farooq's shop", "➕ خرچہ شامل کریں": "➕ Add expense", "📜 اخراجات کی مکمل تفصیل (Full Details)": "📜 Full Expense Details", "تاریخ و وقت": "Date & time", "کیٹیگری": "Category", "تفصیل": "Details", "رقم": "Amount", "🎁 سلامی و تحائف کی فہرست پرنٹ کریں": "🎁 Print salami & gifts list", "🎁 نئی سلامی / تحفہ درج کریں": "🎁 Add new salami / gift", "مہمان کا نام (English / Roman Urdu)": "Guest name", "سلامی کی رقم (Rs.)": "Salami amount (Rs.)", "مثلاً: 5000": "e.g. 5000", "تحفہ / تفصیل (English / Roman Urdu)": "Gift / details", "رقم یا تحفے کی تفصیل — دونوں میں سے کم از کم ایک لازمی ہے۔ رقم خالی چھوڑنی ہو تو تحفے کی تفصیل ضرور لکھیں۔": "Amount or gift details — at least one is required. If you leave the amount empty, write the gift details.", "➕ سلامی / تحفہ شامل کریں": "➕ Add salami / gift", "📜 سلامی دینے والوں کی فہرست": "📜 List of Salami Givers", "🔎 نام، پتہ یا تحفہ تلاش کریں...": "🔎 Search name, address or gift...", "مہمان کا نام": "Guest name", "تحفہ / تفصیل": "Gift / details", "📊 سلامی و تحائف کا مکمل خلاصہ": "📊 Salami & Gifts Summary", "کل اندراج": "Total entries", "کل نقد رقم": "Total cash", "کل تحائف": "Total gifts", "🎁 کون کون سے تحائف ملے:": "🎁 Gifts received:", "👥 نیا صارف بنائیں": "👥 Create new user", "نام (English / Roman Urdu)": "Name", "PIN (کم از کم 6 ہندسے — ہر صارف کا الگ)": "PIN (at least 6 digits — different for each user)", "اس صارف کو کیا اجازت ہو؟": "What can this user do?", "🏠 مہمان شامل کرنا": "🏠 Add guests", "💰 اخراجات شامل کرنا": "💰 Add expenses", "🍲 دیگوں کا حساب": "🍲 Daig calculator", "🎁 سلامی و تحائف": "🎁 Salami & gifts", "👁️ صرف دیکھنا (سب کچھ)": "👁️ View only (everything)", "➕ صارف بنائیں": "➕ Create user", "صارف اپنے موبائل پر یہی ایپ کھولے اور یہی PIN ڈالے۔ حذف کرنے کی اجازت صرف ایڈمن (آپ) کے پاس ہے۔": "The user opens this same app on their mobile and enters this PIN. Only the admin (you) can delete.", "📋 صارفین کی فہرست": "📋 Users List", "نام": "Name", "مہمان": "Guests", "دیگیں": "Daigs", "سلامی": "Salami", "صرف دیکھنا": "View only", "رسائی ختم": "Remove access", "☁️ پرانا ڈیٹا آن لائن بھیجیں": "☁️ Send old data online", "⬆️ اس موبائل/کمپیوٹر کا پرانا ڈیٹا آن لائن بھیجیں": "⬆️ Send this device's old data online", "e.g. Ali Raza ki shadi": "e.g. Ali Raza's Wedding", "e.g. Bachon samet": "e.g. With children", "e.g. Khana, Hall": "e.g. Food, Hall", "e.g. Sone ki angoothi, Dinner set": "e.g. Gold ring, Dinner set"};
+let i18nNodes = null;
+function collectI18n(){
+  i18nNodes = [];
+  const skip = new Set(["houseTable","expenseTable","salamiTable","usersTable","bachatTable","salGiftList","printReport","bachatBest","migrateInfo"]);
+  const walk = el => {
+    if(el.id && skip.has(el.id)) return;
+    if(el.tagName === "SCRIPT" || el.tagName === "STYLE") return;
+    ["placeholder","title"].forEach(a => {
+      const v = el.getAttribute(a);
+      if(v && I18N_EN[v.trim()] != null) i18nNodes.push({ el, attr:a, ur:v, en:I18N_EN[v.trim()] });
+    });
+    el.childNodes.forEach(n => {
+      if(n.nodeType === 3){
+        const t = n.data.trim();
+        if(t && I18N_EN[t] != null) i18nNodes.push({ node:n, ur:n.data, en:n.data.replace(t, I18N_EN[t]) });
+      } else if(n.nodeType === 1) walk(n);
+    });
+  };
+  walk(document.body);
+}
+function refreshPageName(){
+  const cur = [...document.querySelectorAll(".page")].find(p => p.style.display !== "none");
+  const id = cur ? cur.id : "homePage";
+  document.getElementById("currentPageName").textContent = (LANG === "en" ? PAGE_NAMES_EN : PAGE_NAMES)[id] || "";
+}
+function applyLanguage(){
+  const en = LANG === "en";
+  document.documentElement.lang = en ? "en" : "ur";
+  document.documentElement.dir = en ? "ltr" : "rtl";
+  if(i18nNodes) i18nNodes.forEach(x => {
+    if(x.attr) x.el.setAttribute(x.attr, en ? x.en : x.ur);
+    else x.node.data = en ? x.en : x.ur;
+  });
+  ["langBtn","langBtnLogin"].forEach(id => { const b = document.getElementById(id); if(b) b.textContent = en ? "🌐 اردو" : "🌐 English"; });
+  refreshPageName();
+}
+const PREVIEW_PAIRS = [["owner","ownerUrduPreview"],["address","addressUrduPreview"],["expCategory","catUrduPreview"],["expDetail","detailUrduPreview"],["salName","salNameUrduPreview"],["salAddress","salAddressUrduPreview"],["salGift","salGiftUrduPreview"],["nuName","nuNameUrduPreview"],["titleInput","titleUrduPreview"]];
+function refreshEditButtons(){
+  setEditMode("houseSaveBtn", "houseCancelBtn", !!editHouseId, L("➕ گھرانہ شامل کریں", "➕ Add household"));
+  setEditMode("expSaveBtn", "expCancelBtn", !!editExpenseId, L("➕ خرچہ شامل کریں", "➕ Add expense"));
+  setEditMode("salSaveBtn", "salCancelBtn", !!editSalamiId, L("➕ سلامی / تحفہ شامل کریں", "➕ Add salami / gift"));
+}
+function setLang(l){
+  LANG = (l === "en") ? "en" : "ur";
+  try { localStorage.setItem(LANG_KEY, LANG); } catch(e){}
+  applyLanguage();
+  PREVIEW_PAIRS.forEach(([inp, prev]) => {
+    const v = document.getElementById(inp).value;
+    if(v) updateUrduPreview(v, prev);
+    else {
+      previewLatest[prev] = "";
+      const titleOpen = inp === "titleInput" && document.getElementById("titleEditBox").style.display !== "none";
+      document.getElementById(prev).innerText = titleOpen ? getTitle() : "";
+    }
+  });
+  applyTitle();
+  const lt = document.getElementById("lgTitle"); if(lt) lt.textContent = getTitle();
+  renderTable(); renderExpenses(); renderSalami(); renderUsers();
+  applyPermissionsUI();
+  refreshEditButtons();
+  refreshPageName();
+}
+function toggleLang(){ setLang(LANG === "en" ? "ur" : "en"); }
+
 /* ===== ROMAN URDU / ENGLISH  ->  URDU (InPage jaisi sahi Urdu) =====
    1) Pehle apni dictionary (mapWords) check hoti hai
    2) Phir Google Urdu transliteration (internet ho to) — sahi spelling deta hai
@@ -1262,7 +1485,7 @@ function runGooglePreview(val, previewId){
     let changed = false;
     words.forEach((w,i) => { if(results[i]){ translitCache[w] = results[i]; changed = true; } });
     if(changed) saveTranslitCache();
-    if(previewLatest[previewId] === val){
+    if(previewLatest[previewId] === val && LANG !== "en"){
       document.getElementById(previewId).innerText = romanToUrdu(val);
     }
   })();
@@ -1272,6 +1495,12 @@ function runGooglePreview(val, previewId){
 
 function updateUrduPreview(val, previewId) {
   previewLatest[previewId] = val;
+  if(LANG === "en"){
+    // English mode: jo likha wahi save ho, Urdu mein na badle
+    clearTimeout(previewTimers[previewId]); previewTimers[previewId] = null; previewPending[previewId] = null;
+    document.getElementById(previewId).innerText = val;
+    return;
+  }
   document.getElementById(previewId).innerText = romanToUrdu(val);
 
   clearTimeout(previewTimers[previewId]);
@@ -1297,15 +1526,30 @@ async function waitForUrdu(ids){
 /* ===== SHADI KA NAAM (apni marzi se) ===== */
 const TITLE_KEY = "sadiq_wedding_title_v1";
 const DEFAULT_TITLE = "محمد صدیق کی شادی";
-function getTitle(){
+const TITLE_KEY_EN = "sadiq_wedding_title_en_v1";
+const DEFAULT_TITLE_EN = "Muhammad Siddique's Wedding";
+function getTitleUr(){
   let t = null;
   try { t = localStorage.getItem(TITLE_KEY); } catch(e){}
   return (t && t.trim()) ? t : DEFAULT_TITLE;
 }
+function getTitleEn(){
+  let t = null;
+  try { t = localStorage.getItem(TITLE_KEY_EN); } catch(e){}
+  return (t && t.trim()) ? t : "";
+}
+function getTitle(){
+  if(LANG === "en"){
+    const en = getTitleEn(); if(en) return en;
+    const ur = getTitleUr();
+    return ur === DEFAULT_TITLE ? DEFAULT_TITLE_EN : ur;
+  }
+  return getTitleUr();
+}
 function applyTitle(){
   const t = getTitle();
   document.getElementById("eventTitle").textContent = t;
-  document.title = t + " — مہمانوں اور اخراجات کا حساب";
+  document.title = t + L(" — مہمانوں اور اخراجات کا حساب", " — Guests & Expenses Tracker");
   if(typeof updateWelcomeName === "function") updateWelcomeName();
 }
 function toggleTitleEdit(){
@@ -1318,12 +1562,12 @@ function toggleTitleEdit(){
 async function saveTitle(){
   await waitForUrdu(["titleUrduPreview"]);
   const t = document.getElementById("titleUrduPreview").innerText.trim() || document.getElementById("titleInput").value.trim();
-  if(!t){ alert("نام درج کریں"); return; }
+  if(!t){ alert(L("نام درج کریں", "Enter a name")); return; }
   if(USE_FIREBASE){
-    if(!FB.isAdmin){ alert("نام صرف ایڈمن بدل سکتا ہے"); return; }
-    FB.db.collection("config").doc("main").set({ title: t }, { merge: true }).catch(e => alert("محفوظ نہیں ہو سکا: " + fbErr(e)));
+    if(!FB.isAdmin){ alert(L("نام صرف ایڈمن بدل سکتا ہے", "Only the admin can change the name")); return; }
+    FB.db.collection("config").doc("main").set(LANG === "en" ? { titleEn: t } : { title: t }, { merge: true }).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
   }
-  try { localStorage.setItem(TITLE_KEY, t); } catch(e){}
+  try { localStorage.setItem(LANG === "en" ? TITLE_KEY_EN : TITLE_KEY, t); } catch(e){}
   applyTitle();
   toggleTitleEdit();
 }
@@ -1362,12 +1606,12 @@ function updateDashboard(){
 
   document.getElementById("dashHouses").textContent = houses.length.toLocaleString("ur-PK");
   document.getElementById("dashPeople").textContent = totalP.toLocaleString("ur-PK");
-  document.getElementById("dashPeopleLine").textContent = "(" + totalP.toLocaleString("ur-PK") + " افراد)";
+  document.getElementById("dashPeopleLine").textContent = "(" + totalP.toLocaleString("ur-PK") + L(" افراد)", " people)");
   document.getElementById("dashExpenses").textContent = money(totalE);
   const salCash = salamis.reduce((s,x)=>s+Number(x.amount||0),0);
   const salGifts = salamis.filter(x => x.gift).length;
   document.getElementById("dashSalami").textContent = money(salCash);
-  document.getElementById("dashSalamiLine").textContent = "(" + salGifts.toLocaleString("ur-PK") + " تحائف)";
+  document.getElementById("dashSalamiLine").textContent = "(" + salGifts.toLocaleString("ur-PK") + L(" تحائف)", " gifts)");
   
   calculateDaig();
 }
@@ -1379,7 +1623,7 @@ function showPage(id, btn){
   document.querySelectorAll(".menu-btn").forEach(b => b.classList.remove("active"));
   if(btn) btn.classList.add("active");
   document.querySelectorAll(".menu-item").forEach(m => m.classList.toggle("active", m.dataset.page === id));
-  document.getElementById("currentPageName").textContent = PAGE_NAMES[id] || "";
+  document.getElementById("currentPageName").textContent = (LANG === "en" ? PAGE_NAMES_EN : PAGE_NAMES)[id] || "";
   window.scrollTo(0, 0);
   
   if(id === 'guestsPage') animateTableColor('houseTableMain');
@@ -1389,7 +1633,8 @@ function showPage(id, btn){
   }
 }
 
-const PAGE_NAMES = { homePage:"📊 ڈیش بورڈ", guestsPage:"🏠 مہمانوں کی فہرست", foodPage:"🍲 دیگوں کا حساب", expensePage:"💰 اخراجات", salamiPage:"🎁 سلامی و تحائف", usersPage:"👥 صارفین اور اجازت" };
+const PAGE_NAMES_EN = { homePage:"📊 Dashboard", guestsPage:"🏠 Guest List", foodPage:"🍲 Daig Calculator", expensePage:"💰 Expenses", salamiPage:"🎁 Salami & Gifts", usersPage:"👥 Users & Permissions", contactPage:"📞 Contact Us" };
+const PAGE_NAMES = { homePage:"📊 ڈیش بورڈ", guestsPage:"🏠 مہمانوں کی فہرست", foodPage:"🍲 دیگوں کا حساب", expensePage:"💰 اخراجات", salamiPage:"🎁 سلامی و تحائف", usersPage:"👥 صارفین اور اجازت", contactPage:"📞 رابطہ کریں" };
 function toggleMenu(ev){
   if(ev) ev.stopPropagation();
   document.getElementById("menuDropdown").classList.toggle("open");
@@ -1417,6 +1662,46 @@ function updateAutoTime(){
 }
 
 /* GUESTS SYSTEM */
+/* ===== TARMEEM (EDIT) ===== */
+let editHouseId = null, editExpenseId = null, editSalamiId = null;
+function unesc(v){
+  const s = v == null ? "" : String(v);
+  if(!USE_FIREBASE) return s;
+  const t = document.createElement("textarea"); t.innerHTML = s; return t.value;
+}
+function canEdit(p){ return !USE_FIREBASE || can(p); }
+function setEditMode(btnId, cancelId, on, addText){
+  document.getElementById(btnId).textContent = on ? L("✔️ تبدیلی محفوظ کریں", "✔️ Save changes") : addText;
+  document.getElementById(cancelId).style.display = on ? "" : "none";
+}
+function fbUpdate(col, id, data){
+  FB.db.collection(col).doc(id).update(data).catch(e => alert(L("تبدیلی محفوظ نہیں ہو سکی: ", "Could not save changes: ") + fbErr(e)));
+}
+function rowActions(section, editFn, delFn, id){
+  const parts = [];
+  if(canEdit(section)) parts.push(`<button class="btn-edit" onclick="${editFn}('${id}')">${L("ترمیم","Edit")}</button>`);
+  if(canDelete()) parts.push(`<button class="btn-danger" onclick="${delFn}('${id}')">${L("حذف","Delete")}</button>`);
+  return parts.length ? parts.join("") : "—";
+}
+
+function editHouse(id){
+  const h = houses.find(x => x.id === id); if(!h) return;
+  if(!canEdit("guests")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+  editHouseId = id;
+  document.getElementById("owner").value = unesc(h.owner); updateUrduPreview(unesc(h.owner), "ownerUrduPreview");
+  document.getElementById("people").value = h.people || "";
+  document.getElementById("address").value = unesc(h.address); updateUrduPreview(unesc(h.address), "addressUrduPreview");
+  document.getElementById("note").value = unesc(h.note);
+  setEditMode("houseSaveBtn", "houseCancelBtn", true, L("➕ گھرانہ شامل کریں", "➕ Add household"));
+  document.getElementById("guestFormCard").scrollIntoView({ behavior:"smooth" });
+}
+function cancelHouseEdit(){
+  editHouseId = null;
+  ["owner","people","address","note"].forEach(id => document.getElementById(id).value = "");
+  ["ownerUrduPreview","addressUrduPreview"].forEach(id => document.getElementById(id).innerText = "");
+  setEditMode("houseSaveBtn", "houseCancelBtn", false, L("➕ گھرانہ شامل کریں", "➕ Add household"));
+}
+
 async function saveHouse(){
   await waitForUrdu(["ownerUrduPreview", "addressUrduPreview"]);
   const ownerInput = document.getElementById("owner").value.trim();
@@ -1430,10 +1715,23 @@ async function saveHouse(){
   const owner = ownerPreview || ownerInput;
   const address = addressPreview || addressInput;
 
-  if(!ownerInput || !people){ alert("نام اور افراد درج کریں"); return; }
+  if(!ownerInput || !people){ alert(L("نام اور افراد درج کریں", "Enter the name and number of people")); return; }
+
+  if(editHouseId){
+    if(USE_FIREBASE){
+      if(!can("guests")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+      fbUpdate("houses", editHouseId, {owner, address, people, note});
+    } else {
+      const h = houses.find(x => x.id === editHouseId);
+      if(h) Object.assign(h, {owner, address, people, note});
+      saveData(); renderTable();
+    }
+    cancelHouseEdit();
+    return;
+  }
   
   if(USE_FIREBASE){
-    if(!can("guests")){ alert("آپ کو مہمان شامل کرنے کی اجازت نہیں"); return; }
+    if(!can("guests")){ alert(L("آپ کو مہمان شامل کرنے کی اجازت نہیں", "You don't have permission to add guests")); return; }
     fbAdd("houses", {owner, address, people, note});
   } else {
     houses.push({id: Date.now().toString(36), owner, address, people, note});
@@ -1449,9 +1747,10 @@ async function saveHouse(){
 }
 
 function deleteHouse(id){
+  if(id === editHouseId) cancelHouseEdit();
   if(USE_FIREBASE){
-    if(!canDelete()){ alert("حذف کرنے کی اجازت صرف ایڈمن کو ہے"); return; }
-    FB.db.collection("houses").doc(id).delete().catch(e => alert("حذف نہیں ہو سکا: " + fbErr(e)));
+    if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
+    FB.db.collection("houses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   houses = houses.filter(h => h.id !== id);
@@ -1470,9 +1769,11 @@ function renderTable(){
       <td>${h.address || "—"}</td>
       <td class="ltr"><b>${h.people}</b></td>
       <td>${h.note || "—"}${h.byName ? `<div class="by-line">✍️ ${h.byName}</div>` : ""}</td>
-      <td>${canDelete() ? `<button class="btn-danger" onclick="deleteHouse('${h.id}')">حذف</button>` : "—"}</td>
+      <td>${rowActions("guests", "editHouse", "deleteHouse", h.id)}</td>
     </tr>
   `).join("");
+  document.getElementById("guestTotalHouses").textContent = houses.length.toLocaleString("en-PK");
+  document.getElementById("guestTotalPeople").textContent = houses.reduce((s,h)=>s+Number(h.people||0),0).toLocaleString("en-PK");
   updateDashboard();
   animateTableColor('houseTableMain');
 }
@@ -1501,26 +1802,148 @@ function calculateDaig(){
     document.getElementById("calcTotalKg").textContent = totalKg + " kg";
     document.getElementById("calcTotalCost").textContent = money(totalCost);
   }
+  calculateBachat();
+}
+
+/* ===== BACHAT KA HISAB (gosht + meetha) ===== */
+const BACHAT_KEY = "sadiq_wedding_bachat_v1";
+const BACHAT_FIELDS = ["bcChicken","bcBeef","bcMutton","bcMeethaType","bcMeethaPrice","bcMeethaPeople","bcMeethaCut"];
+function loadBachat(){
+  try{
+    const d = JSON.parse(localStorage.getItem(BACHAT_KEY) || "{}");
+    BACHAT_FIELDS.forEach(id => { if(d[id] != null && d[id] !== "") document.getElementById(id).value = d[id]; });
+  }catch(e){}
+}
+function bachatChanged(){
+  const d = {};
+  BACHAT_FIELDS.forEach(id => d[id] = document.getElementById(id).value);
+  try { localStorage.setItem(BACHAT_KEY, JSON.stringify(d)); } catch(e){}
+  calculateBachat();
+}
+function calculateBachat(){
+  const tbody = document.getElementById("bachatTable");
+  const best = document.getElementById("bachatBest");
+  if(!tbody || !best) return;
+  const num = id => { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; };
+  const totalP = houses.reduce((s,h)=>s+Number(h.people||0),0);
+  const perDaig = parseInt(document.getElementById("basePeoplePerDaig").value,10) || 80;
+  const mSel = document.getElementById("bcMeethaType");
+  const mType = mSel.options[mSel.selectedIndex] ? mSel.options[mSel.selectedIndex].text : mSel.value;
+  const mPrice = num("bcMeethaPrice");
+  const mPeople = num("bcMeethaPeople") || 150;
+  const cut = Math.min(50, Math.max(0, num("bcMeethaCut")));
+
+  if(totalP <= 0){
+    tbody.innerHTML = `<tr><td colspan="5">${L("پہلے مہمانوں کی فہرست میں افراد شامل کریں","First add people in the guest list")}</td></tr>`;
+    best.textContent = "";
+    return;
+  }
+
+  const goshts = [
+    { name:L("🐔 چکن", "🐔 Chicken"), price:num("bcChicken") },
+    { name:L("🐄 بیف", "🐄 Beef"), price:num("bcBeef") },
+    { name:L("🐐 مٹن", "🐐 Mutton"), price:num("bcMutton") }
+  ].filter(g => g.price > 0);
+
+  const daigPlain = Math.ceil(totalP / perDaig);
+  const daigWith = Math.ceil(totalP * (1 - cut/100) / perDaig);
+  const meethaDaigs = Math.ceil(totalP / mPeople);
+  const meethaCost = meethaDaigs * mPrice;
+
+  const opts = [];
+  goshts.forEach(g => {
+    opts.push({ label: g.name + L(" (بغیر میٹھا)", " (no dessert)"), gName: g.name, daigs: daigPlain, m: 0, cost: daigPlain * g.price });
+    if(mPrice > 0){
+      opts.push({ label: g.name + " + 🍮 " + mType, gName: g.name, daigs: daigWith, m: meethaDaigs, cost: daigWith * g.price + meethaCost });
+    }
+  });
+
+  if(!opts.length){
+    tbody.innerHTML = `<tr><td colspan="5">${L("گوشت کی فی دیگ قیمت درج کریں","Enter the price per daig for meat")}</td></tr>`;
+    best.textContent = "";
+    return;
+  }
+
+  const maxCost = Math.max(...opts.map(o => o.cost));
+  const minCost = Math.min(...opts.map(o => o.cost));
+
+  tbody.innerHTML = opts.map(o => {
+    const isBest = o.cost === minCost;
+    const saving = maxCost - o.cost;
+    return `
+    <tr${isBest ? ' style="background:rgba(46,125,50,.12)"' : ''}>
+      <td><b>${o.label}</b>${isBest ? ' ⭐' : ''}</td>
+      <td class="ltr"><b>${o.daigs}</b></td>
+      <td class="ltr">${o.m > 0 ? o.m : "—"}</td>
+      <td class="ltr"><b>${money(o.cost)}</b></td>
+      <td class="ltr" style="color:${saving > 0 ? '#2e7d32' : '#999'}"><b>${saving > 0 ? money(saving) : "—"}</b></td>
+    </tr>`;
+  }).join("");
+
+  const b = opts.find(o => o.cost === minCost);
+  let txt = L(`⭐ سب سے زیادہ بچت: ${b.gName} کی ${b.daigs} دیگیں`, `⭐ Biggest saving: ${b.daigs} daigs of ${b.gName}`);
+  if(b.m > 0) txt += L(` + ${mType} کی ${b.m} دیگیں`, ` + ${b.m} daigs of ${mType}`);
+  txt += L(` — کل خرچہ ${money(b.cost)} — سب سے مہنگے مینو کے مقابلے میں بچت ${money(maxCost - b.cost)}`, ` — Total cost ${money(b.cost)} — Saving compared to the most expensive menu ${money(maxCost - b.cost)}`);
+  // meethe se gosht par kitni bachat (har gosht ke liye)
+  if(mPrice > 0 && daigPlain > daigWith){
+    txt += L(`\n🍮 میٹھا رکھنے سے گوشت کی ${daigPlain - daigWith} دیگیں کم لگیں گی۔`, `\n🍮 Serving dessert needs ${daigPlain - daigWith} fewer meat daigs.`);
+  }
+  best.innerText = txt;
 }
 
 /* EXPENSES SYSTEM */
+function editExpense(id){
+  const e = expenses.find(x => x.id === id); if(!e) return;
+  if(!canEdit("expenses")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+  editExpenseId = id;
+  document.getElementById("expDate").value = unesc(e.date);
+  document.getElementById("expTime").value = unesc(e.time);
+  document.getElementById("expCategory").value = unesc(e.category); updateUrduPreview(unesc(e.category), "catUrduPreview");
+  document.getElementById("expAmount").value = e.amount || "";
+  document.getElementById("expDetail").value = unesc(e.detail); updateUrduPreview(unesc(e.detail), "detailUrduPreview");
+  setEditMode("expSaveBtn", "expCancelBtn", true, L("➕ خرچہ شامل کریں", "➕ Add expense"));
+  document.getElementById("expenseFormCard").scrollIntoView({ behavior:"smooth" });
+}
+function cancelExpenseEdit(){
+  editExpenseId = null;
+  ["expCategory","expAmount","expDetail"].forEach(id => document.getElementById(id).value = "");
+  ["catUrduPreview","detailUrduPreview"].forEach(id => document.getElementById(id).innerText = "");
+  document.getElementById("expDate").value = new Date().toISOString().split('T')[0];
+  updateAutoTime();
+  setEditMode("expSaveBtn", "expCancelBtn", false, L("➕ خرچہ شامل کریں", "➕ Add expense"));
+}
+
 async function saveExpense(){
   await waitForUrdu(["catUrduPreview", "detailUrduPreview"]);
   const date = document.getElementById("expDate").value || new Date().toISOString().split('T')[0];
-  updateAutoTime();
-  const time = document.getElementById("expTime").value;
+  const editingExp = editExpenseId ? expenses.find(x => x.id === editExpenseId) : null;
+  if(!editingExp) updateAutoTime();
+  const time = editingExp ? unesc(editingExp.time) : document.getElementById("expTime").value;
   const catInput = document.getElementById("expCategory").value.trim();
   const catPreview = document.getElementById("catUrduPreview").innerText.trim();
-  const category = catPreview || catInput || "عام";
+  const category = catPreview || catInput || L("عام", "General");
   const amount = parseFloat(document.getElementById("expAmount").value);
   const detailInput = document.getElementById("expDetail").value.trim();
   const detailPreview = document.getElementById("detailUrduPreview").innerText.trim();
   const detail = detailPreview || detailInput;
 
-  if(!amount){ alert("خرچے کی رقم درج کریں"); return; }
+  if(!amount){ alert(L("خرچے کی رقم درج کریں", "Enter the expense amount")); return; }
+
+  if(editExpenseId){
+    if(USE_FIREBASE){
+      if(!can("expenses")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+      fbUpdate("expenses", editExpenseId, {date, time, category, amount, detail});
+    } else {
+      const e = expenses.find(x => x.id === editExpenseId);
+      if(e) Object.assign(e, {date, time, category, amount, detail});
+      saveExpenses(); renderExpenses();
+    }
+    cancelExpenseEdit();
+    return;
+  }
 
   if(USE_FIREBASE){
-    if(!can("expenses")){ alert("آپ کو اخراجات شامل کرنے کی اجازت نہیں"); return; }
+    if(!can("expenses")){ alert(L("آپ کو اخراجات شامل کرنے کی اجازت نہیں", "You don't have permission to add expenses")); return; }
     fbAdd("expenses", {date, time, category, amount, detail});
   } else {
     expenses.push({id: Date.now().toString(36), date, time, category, amount, detail});
@@ -1532,9 +1955,10 @@ async function saveExpense(){
 }
 
 function deleteExpense(id){
+  if(id === editExpenseId) cancelExpenseEdit();
   if(USE_FIREBASE){
-    if(!canDelete()){ alert("حذف کرنے کی اجازت صرف ایڈمن کو ہے"); return; }
-    FB.db.collection("expenses").doc(id).delete().catch(e => alert("حذف نہیں ہو سکا: " + fbErr(e)));
+    if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
+    FB.db.collection("expenses").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   expenses = expenses.filter(e => e.id !== id);
@@ -1549,7 +1973,7 @@ function renderExpenses(){
       <td><b>${e.category}</b></td>
       <td>${e.detail || "—"}${e.byName ? `<div class="by-line">✍️ ${e.byName}</div>` : ""}</td>
       <td class="ltr"><b>${money(e.amount)}</b></td>
-      <td>${canDelete() ? `<button class="btn-danger" onclick="deleteExpense('${e.id}')">حذف</button>` : "—"}</td>
+      <td>${rowActions("expenses", "editExpense", "deleteExpense", e.id)}</td>
     </tr>
   `).join("");
   updateDashboard();
@@ -1557,6 +1981,24 @@ function renderExpenses(){
 }
 
 /* SALAMI / TOHFE SYSTEM */
+function editSalami(id){
+  const x = salamis.find(s => s.id === id); if(!x) return;
+  if(!canEdit("salami")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+  editSalamiId = id;
+  document.getElementById("salName").value = unesc(x.name); updateUrduPreview(unesc(x.name), "salNameUrduPreview");
+  document.getElementById("salAddress").value = unesc(x.address); updateUrduPreview(unesc(x.address), "salAddressUrduPreview");
+  document.getElementById("salGift").value = unesc(x.gift); updateUrduPreview(unesc(x.gift), "salGiftUrduPreview");
+  document.getElementById("salAmount").value = Number(x.amount) > 0 ? x.amount : "";
+  setEditMode("salSaveBtn", "salCancelBtn", true, L("➕ سلامی / تحفہ شامل کریں", "➕ Add salami / gift"));
+  document.getElementById("salamiFormCard").scrollIntoView({ behavior:"smooth" });
+}
+function cancelSalamiEdit(){
+  editSalamiId = null;
+  ["salName","salAddress","salGift","salAmount"].forEach(id => document.getElementById(id).value = "");
+  ["salNameUrduPreview","salAddressUrduPreview","salGiftUrduPreview"].forEach(id => document.getElementById(id).innerText = "");
+  setEditMode("salSaveBtn", "salCancelBtn", false, L("➕ سلامی / تحفہ شامل کریں", "➕ Add salami / gift"));
+}
+
 async function saveSalami(){
   await waitForUrdu(["salNameUrduPreview", "salAddressUrduPreview", "salGiftUrduPreview"]);
   const nameInput = document.getElementById("salName").value.trim();
@@ -1567,12 +2009,25 @@ async function saveSalami(){
   const amtRaw = document.getElementById("salAmount").value.trim();
   const amount = amtRaw === "" ? 0 : parseFloat(amtRaw);
 
-  if(!nameInput){ alert("مہمان کا نام درج کریں"); return; }
-  if(isNaN(amount) || amount < 0){ alert("رقم درست درج کریں"); return; }
-  if(amount <= 0 && !gift){ alert("رقم یا تحفے کی تفصیل میں سے کم از کم ایک لازمی ہے\nرقم خالی ہو تو تحفے کی تفصیل لکھیں"); return; }
+  if(!nameInput){ alert(L("مہمان کا نام درج کریں", "Enter the guest name")); return; }
+  if(isNaN(amount) || amount < 0){ alert(L("رقم درست درج کریں", "Enter a valid amount")); return; }
+  if(amount <= 0 && !gift){ alert(L("رقم یا تحفے کی تفصیل میں سے کم از کم ایک لازمی ہے\nرقم خالی ہو تو تحفے کی تفصیل لکھیں", "Either an amount or gift details is required\nIf the amount is empty, write the gift details")); return; }
+
+  if(editSalamiId){
+    if(USE_FIREBASE){
+      if(!can("salami")){ alert(L("آپ کو ترمیم کی اجازت نہیں", "You don't have permission to edit")); return; }
+      fbUpdate("salami", editSalamiId, {name, address, amount, gift});
+    } else {
+      const x = salamis.find(s => s.id === editSalamiId);
+      if(x) Object.assign(x, {name, address, amount, gift});
+      saveSalamis(); renderSalami();
+    }
+    cancelSalamiEdit();
+    return;
+  }
 
   if(USE_FIREBASE){
-    if(!can("salami")){ alert("آپ کو سلامی شامل کرنے کی اجازت نہیں"); return; }
+    if(!can("salami")){ alert(L("آپ کو سلامی شامل کرنے کی اجازت نہیں", "You don't have permission to add salami")); return; }
     fbAdd("salami", {name, address, amount, gift});
   } else {
     salamis.push({id: Date.now().toString(36), name, address, amount, gift});
@@ -1583,9 +2038,10 @@ async function saveSalami(){
 }
 
 function deleteSalami(id){
+  if(id === editSalamiId) cancelSalamiEdit();
   if(USE_FIREBASE){
-    if(!canDelete()){ alert("حذف کرنے کی اجازت صرف ایڈمن کو ہے"); return; }
-    FB.db.collection("salami").doc(id).delete().catch(e => alert("حذف نہیں ہو سکا: " + fbErr(e)));
+    if(!canDelete()){ alert(L("حذف کرنے کی اجازت صرف ایڈمن کو ہے", "Only the admin can delete")); return; }
+    FB.db.collection("salami").doc(id).delete().catch(e => alert(L("حذف نہیں ہو سکا: ", "Could not delete: ") + fbErr(e)));
     return;
   }
   salamis = salamis.filter(s => s.id !== id);
@@ -1608,7 +2064,7 @@ function renderSalami(){
       <td>${s.address || "—"}</td>
       <td class="ltr"><b>${Number(s.amount) > 0 ? money(s.amount) : "—"}</b></td>
       <td>${s.gift ? "🎁 " + s.gift : "—"}</td>
-      <td>${canDelete() ? `<button class="btn-danger" onclick="deleteSalami('${s.id}')">حذف</button>` : "—"}</td>
+      <td>${rowActions("salami", "editSalami", "deleteSalami", s.id)}</td>
     </tr>`).join("");
 
   const t = salamiTotals();
@@ -1617,7 +2073,7 @@ function renderSalami(){
   document.getElementById("salTotalGifts").textContent = t.gifts.length.toLocaleString("en-PK");
   document.getElementById("salGiftList").innerHTML = t.gifts.length
     ? t.gifts.map(g => `<span class="sal-chip">🎁 <b>${g.gift}</b> — ${g.name}</span>`).join("")
-    : `<span class="sal-empty">ابھی کوئی تحفہ درج نہیں</span>`;
+    : `<span class="sal-empty">${L("ابھی کوئی تحفہ درج نہیں","No gifts recorded yet")}</span>`;
   updateDashboard();
   animateTableColor('salamiTableMain');
 }
@@ -1634,20 +2090,20 @@ function printSalamiReport(){
     </tr>`).join("");
   const giftRows = t.gifts.map((g,i) => `<tr><td class="ltr">${i+1}</td><td>${g.gift}</td><td>${g.name}</td></tr>`).join("");
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — سلامی و تحائف</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("سلامی و تحائف","Salami & Gifts")}</h1></div>
     <div class="print-summary">
-      <div class="print-box">کل اندراج<b>${t.entries}</b></div>
-      <div class="print-box">کل نقد رقم<b>${money(t.cash)}</b></div>
-      <div class="print-box">کل تحائف<b>${t.gifts.length}</b></div>
+      <div class="print-box">${L("کل اندراج","Total entries")}<b>${t.entries}</b></div>
+      <div class="print-box">${L("کل نقد رقم","Total cash")}<b>${money(t.cash)}</b></div>
+      <div class="print-box">${L("کل تحائف","Total gifts")}<b>${t.gifts.length}</b></div>
     </div>
     <table class="print-table">
-      <thead><tr><th>نمبر</th><th>مہمان کا نام</th><th>پتہ</th><th>رقم</th><th>تحفہ / تفصیل</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="5">کوئی اندراج نہیں</td></tr>'}</tbody>
+      <thead><tr><th>${L("نمبر","No.")}</th><th>${L("مہمان کا نام","Guest name")}</th><th>${L("پتہ","Address")}</th><th>${L("رقم","Amount")}</th><th>${L("تحفہ / تفصیل","Gift / details")}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="5">' + L("کوئی اندراج نہیں","No entries") + '</td></tr>'}</tbody>
     </table>
-    <h3 style="margin-top:12px">🎁 تحائف کی فہرست:</h3>
+    <h3 style="margin-top:12px">${L("🎁 تحائف کی فہرست:","🎁 Gifts list:")}</h3>
     <table class="print-table">
-      <thead><tr><th>نمبر</th><th>تحفہ</th><th>دینے والا</th></tr></thead>
-      <tbody>${giftRows || '<tr><td colspan="3">کوئی تحفہ نہیں</td></tr>'}</tbody>
+      <thead><tr><th>${L("نمبر","No.")}</th><th>${L("تحفہ","Gift")}</th><th>${L("دینے والا","Given by")}</th></tr></thead>
+      <tbody>${giftRows || '<tr><td colspan="3">' + L("کوئی تحفہ نہیں","No gifts") + '</td></tr>'}</tbody>
     </table>
   `);
 }
@@ -1655,6 +2111,12 @@ function printSalamiReport(){
 /* PRINT FUNCTIONS */
 function openPrint(html){
   const box = document.getElementById("printReport");
+  // Print ki tareekh aur waqt har print ke heading ke neeche
+  const now = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  const dateTxt = pad(now.getDate()) + "-" + pad(now.getMonth()+1) + "-" + now.getFullYear() + "  " + pad(now.getHours()) + ":" + pad(now.getMinutes());
+  const dateLine = `<div style="font-size:11px;margin-top:2px">${L("پرنٹ کی تاریخ:","Printed on:")} <span style="font-family:Arial,sans-serif;direction:ltr;unicode-bidi:embed">${dateTxt}</span></div>`;
+  html = html.replace("</h1></div>", "</h1>" + dateLine + "</div>");
   box.innerHTML = html; box.style.display = "block";
   window.print();
   setTimeout(()=>{ box.style.display="none"; }, 500);
@@ -1671,9 +2133,13 @@ function printGuestListNormal(){
     </tr>`).join("");
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — مہمانوں کی مکمل فہرست</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("مہمانوں کی مکمل فہرست","Complete Guest List")}</h1></div>
+    <div class="print-summary" style="grid-template-columns:1fr 1fr">
+      <div class="print-box">${L("کل گھر","Total households")}<b>${houses.length}</b></div>
+      <div class="print-box">${L("کل افراد","Total people")}<b>${houses.reduce((s,h)=>s+Number(h.people||0),0)}</b></div>
+    </div>
     <table class="print-table">
-      <thead><tr><th>نمبر</th><th>سربراہ</th><th>پتہ</th><th>افراد</th><th>نوٹ</th></tr></thead>
+      <thead><tr><th>${L("نمبر","No.")}</th><th>${L("سربراہ","Head of household")}</th><th>${L("پتہ","Address")}</th><th>${L("افراد","People")}</th><th>${L("نوٹ","Note")}</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `);
@@ -1682,13 +2148,13 @@ function printGuestListNormal(){
 function printGuestListCutout(){
   const cards = houses.map(h => `
     <div class="cutout-card-single">
-      <div class="cutout-name-single">محترم ${h.owner} صاحب</div>
-      <div class="cutout-address-single">پتہ: ${h.address || '—'}</div>
+      <div class="cutout-name-single">${L(`محترم ${h.owner} صاحب`, `Mr. ${h.owner}`)}</div>
+      <div class="cutout-address-single">${L("پتہ:","Address:")} ${h.address || '—'}</div>
     </div>
   `).join("");
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — (لیبل پرنٹ)</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("(لیبل پرنٹ)","(Label Print)")}</h1></div>
     <div class="cutout-grid-single">${cards}</div>
   `);
 }
@@ -1696,13 +2162,17 @@ function printGuestListCutout(){
 function printGuestBooklet(){
   const items = houses.map((h,i) => `
     <div class="booklet-item">
-      <b>${i+1}. ${h.owner} (${h.people} افراد)</b>
+      <b>${i+1}. ${h.owner} (${h.people} ${L("افراد","people")})</b>
       <div>${h.address || '—'}</div>
     </div>
   `).join("");
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — بک لیٹ فہرست</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("بک لیٹ فہرست","Booklet List")}</h1></div>
+    <div class="print-summary" style="grid-template-columns:1fr 1fr">
+      <div class="print-box">${L("کل گھر","Total households")}<b>${houses.length}</b></div>
+      <div class="print-box">${L("کل افراد","Total people")}<b>${houses.reduce((s,h)=>s+Number(h.people||0),0)}</b></div>
+    </div>
     <div class="booklet-grid">${items}</div>
   `);
 }
@@ -1718,16 +2188,16 @@ function printFoodReport(){
   const totalCost = Math.round(daigs * daigCost);
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — دیگوں کا حساب</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("دیگوں کا حساب","Daig Calculation")}</h1></div>
     <div class="print-summary">
-      <div class="print-box">کل افراد<b>${totalP}</b></div>
-      <div class="print-box">فی دیگ افراد<b>${perDaig}</b></div>
-      <div class="print-box">مطلوبہ دیگیں<b>${daigs}</b></div>
+      <div class="print-box">${L("کل افراد","Total people")}<b>${totalP}</b></div>
+      <div class="print-box">${L("فی دیگ افراد","People per daig")}<b>${perDaig}</b></div>
+      <div class="print-box">${L("مطلوبہ دیگیں","Daigs needed")}<b>${daigs}</b></div>
     </div>
     <div class="print-summary" style="margin-top:6px">
-      <div class="print-box">فی دیگ سائز<b>${daigWeight} kg</b></div>
-      <div class="print-box">کل مقدار<b>${totalKg} kg</b></div>
-      <div class="print-box">متوقع لاگت<b>${money(totalCost)}</b></div>
+      <div class="print-box">${L("فی دیگ سائز","Daig size")}<b>${daigWeight} kg</b></div>
+      <div class="print-box">${L("کل مقدار","Total quantity")}<b>${totalKg} kg</b></div>
+      <div class="print-box">${L("متوقع لاگت","Expected cost")}<b>${money(totalCost)}</b></div>
     </div>
   `);
 }
@@ -1748,16 +2218,16 @@ function printDashboard(){
   `).join("");
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — ڈیش بورڈ و اخراجات خلاصہ</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("ڈیش بورڈ و اخراجات خلاصہ","Dashboard & Expense Summary")}</h1></div>
     <div class="print-summary">
-      <div class="print-box">کل گھرانے<b>${houses.length}</b></div>
-      <div class="print-box">کل افراد<b>${houses.reduce((s,h)=>s+Number(h.people||0),0)}</b></div>
-      <div class="print-box">کل اخراجات<b>${money(totalE)}</b></div>
+      <div class="print-box">${L("کل گھرانے","Total households")}<b>${houses.length}</b></div>
+      <div class="print-box">${L("کل افراد","Total people")}<b>${houses.reduce((s,h)=>s+Number(h.people||0),0)}</b></div>
+      <div class="print-box">${L("کل اخراجات","Total expenses")}<b>${money(totalE)}</b></div>
     </div>
-    <h3 style="margin-top:12px">📊 کیٹیگری وائز اخراجات (Summary):</h3>
+    <h3 style="margin-top:12px">${L("📊 کیٹیگری وائز اخراجات (Summary):","📊 Category-wise expenses (Summary):")}</h3>
     <table class="print-table">
-      <thead><tr><th>کیٹیگری</th><th>ٹوٹل رقم</th></tr></thead>
-      <tbody>${catRows || '<tr><td colspan="2">کوئی خرچہ درج نہیں</td></tr>'}</tbody>
+      <thead><tr><th>${L("کیٹیگری","Category")}</th><th>${L("ٹوٹل رقم","Total amount")}</th></tr></thead>
+      <tbody>${catRows || '<tr><td colspan="2">' + L("کوئی خرچہ درج نہیں","No expenses recorded") + '</td></tr>'}</tbody>
     </table>
   `);
 }
@@ -1773,9 +2243,9 @@ function printExpenseReport(){
   `).join("");
 
   openPrint(`
-    <div class="print-head"><h1>${getTitle()} — اخراجات کی تفصیل (Full Detail)</h1></div>
+    <div class="print-head"><h1>${getTitle()} — ${L("اخراجات کی تفصیل (Full Detail)","Expense Details (Full Detail)")}</h1></div>
     <table class="print-table">
-      <thead><tr><th>تاریخ و وقت</th><th>کیٹیگری</th><th>تفصیل</th><th>رقم</th></tr></thead>
+      <thead><tr><th>${L("تاریخ و وقت","Date & time")}</th><th>${L("کیٹیگری","Category")}</th><th>${L("تفصیل","Details")}</th><th>${L("رقم","Amount")}</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `);
@@ -1794,17 +2264,18 @@ const WELCOME_MIN_MS = 2800;      // welcome page kam se kam itni der dikhe
 const WELCOME_MAX_WAIT_MS = 20000;
 
 let wlStart = Date.now(), wlReady = false, wlProgress = 0, wlTimer = null, wlFinished = false;
+const WL_STATUS_EN = ["Preparing data…", "Loading guest list…", "Arranging daig calculation…", "Matching expense records…"];
 const WL_STATUS = ["ڈیٹا تیار ہو رہا ہے…", "مہمانوں کی فہرست لوڈ ہو رہی ہے…", "دیگوں کا حساب ترتیب دیا جا رہا ہے…", "اخراجات کا ریکارڈ ملایا جا رہا ہے…"];
 
 function coupleName(){
   const t = getTitle();
-  const n = t.replace(/\s*کی\s*شادی\s*(مبارک)?\s*$/, "").trim();
+  const n = t.replace(/\s*کی\s*شادی\s*(مبارک)?\s*$/, "").replace(/['’]s\s+wedding\s*$/i, "").replace(/\s+ki\s+shadi\s*$/i, "").trim();
   return n || t;
 }
 function updateWelcomeName(){
   const n = coupleName();
   const nameEl = document.getElementById("wlName"); if(nameEl) nameEl.textContent = n;
-  const wishEl = document.getElementById("wlWish"); if(wishEl) wishEl.textContent = n + " کو شادی کی دلی مبارکباد 🌹";
+  const wishEl = document.getElementById("wlWish"); if(wishEl) wishEl.textContent = L(n + " کو شادی کی دلی مبارکباد 🌹", "Heartfelt congratulations to " + n + " on the wedding 🌹");
 }
 
 function buildWelcomeAnimations(){
@@ -1854,13 +2325,13 @@ function wlTick(){
   else { wlProgress = Math.min(100, wlProgress + 12); }
   document.getElementById("wlBarFill").style.width = wlProgress + "%";
   document.getElementById("wlStatus").textContent =
-    wlProgress >= 100 ? "سب کچھ تیار ہے ✔" : WL_STATUS[Math.floor(elapsed/1200) % WL_STATUS.length];
+    wlProgress >= 100 ? L("سب کچھ تیار ہے ✔", "All ready ✔") : (LANG === "en" ? WL_STATUS_EN : WL_STATUS)[Math.floor(elapsed/1200) % WL_STATUS.length];
 
   const timedOut = elapsed > WELCOME_MAX_WAIT_MS;
   if((wlProgress >= 100 && elapsed >= WELCOME_MIN_MS) || timedOut){
     clearInterval(wlTimer);
     if(timedOut && !wlReady){
-      document.getElementById("wlStatus").textContent = "انٹرنیٹ سست ہے — آپ پھر بھی شروع کر سکتے ہیں";
+      document.getElementById("wlStatus").textContent = L("انٹرنیٹ سست ہے — آپ پھر بھی شروع کر سکتے ہیں", "Internet is slow — you can still start");
     }
     document.getElementById("wlEnter").classList.add("show");
   }
@@ -1913,13 +2384,13 @@ function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&
 function pinEmail(pin){ return "pin" + String(pin).trim() + "@shadi-hisab.app"; }
 function fbErr(e){
   const c = (e && e.code) || "";
-  if(c.includes("wrong-password") || c.includes("user-not-found") || c.includes("invalid-credential") || c.includes("invalid-login")) return "PIN غلط ہے";
-  if(c.includes("email-already-in-use")) return "یہ PIN کسی اور کا ہے، کوئی دوسرا PIN رکھیں";
-  if(c.includes("weak-password")) return "PIN کم از کم 6 ہندسوں کا ہو";
-  if(c.includes("permission-denied")) return "اجازت نہیں";
-  if(c.includes("network") || c.includes("unavailable")) return "انٹرنیٹ نہیں مل رہا";
-  if(c.includes("too-many-requests")) return "بہت زیادہ کوششیں، تھوڑی دیر بعد کوشش کریں";
-  return (e && e.message) ? e.message : "کچھ غلط ہو گیا";
+  if(c.includes("wrong-password") || c.includes("user-not-found") || c.includes("invalid-credential") || c.includes("invalid-login")) return L("PIN غلط ہے", "Wrong PIN");
+  if(c.includes("email-already-in-use")) return L("یہ PIN کسی اور کا ہے، کوئی دوسرا PIN رکھیں", "This PIN belongs to someone else, choose another PIN");
+  if(c.includes("weak-password")) return L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits");
+  if(c.includes("permission-denied")) return L("اجازت نہیں", "Permission denied");
+  if(c.includes("network") || c.includes("unavailable")) return L("انٹرنیٹ نہیں مل رہا", "No internet connection");
+  if(c.includes("too-many-requests")) return L("بہت زیادہ کوششیں، تھوڑی دیر بعد کوشش کریں", "Too many attempts, try again later");
+  return (e && e.message) ? e.message : L("کچھ غلط ہو گیا", "Something went wrong");
 }
 
 function loadScript(src){
@@ -1937,7 +2408,7 @@ async function fbInit(){
     FB.auth = firebase.auth();
     FB.auth.onAuthStateChanged(onAuth);
   }catch(e){
-    document.getElementById("wlStatus").textContent = "آن لائن سسٹم لوڈ نہیں ہو سکا — انٹرنیٹ چیک کریں";
+    document.getElementById("wlStatus").textContent = L("آن لائن سسٹم لوڈ نہیں ہو سکا — انٹرنیٹ چیک کریں", "Could not load the online system — check your internet");
     appDataReady();
   }
 }
@@ -1954,6 +2425,7 @@ async function readConfig(){
 function applyConfig(){
   const c = FB.cfg || {};
   if(c.title){ try { localStorage.setItem(TITLE_KEY, c.title); } catch(e){} applyTitle(); }
+  if(c.titleEn){ try { localStorage.setItem(TITLE_KEY_EN, c.titleEn); } catch(e){} applyTitle(); }
   const set = (id, v) => { const el = document.getElementById(id); if(v != null && document.activeElement !== el) el.value = v; };
   set("basePeoplePerDaig", c.perDaig); set("daigWeightKg", c.daigWeight); set("daigCostPrice", c.daigCost);
   calculateDaig();
@@ -1979,7 +2451,7 @@ async function onAuth(user){
   let prof = null;
   try { const s = await FB.db.collection("users").doc(user.uid).get(); prof = s.exists ? s.data() : null; } catch(e){}
   if(!FB.isAdmin && !prof){
-    alert("آپ کی رسائی ختم کر دی گئی ہے یا اکاؤنٹ موجود نہیں");
+    alert(L("آپ کی رسائی ختم کر دی گئی ہے یا اکاؤنٹ موجود نہیں", "Your access has been removed or the account does not exist"));
     FB.auth.signOut(); return;
   }
   FB.perms = (prof && prof.perms) || {};
@@ -2004,7 +2476,7 @@ function startListeners(){
 
   if(!FB.isAdmin){
     FB.unsubs.push(FB.db.collection("users").doc(uid).onSnapshot(s => {
-      if(!s.exists){ alert("آپ کی رسائی ختم کر دی گئی ہے"); FB.auth.signOut(); return; }
+      if(!s.exists){ alert(L("آپ کی رسائی ختم کر دی گئی ہے", "Your access has been removed")); FB.auth.signOut(); return; }
       FB.perms = s.data().perms || {}; FB.name = s.data().name || "";
       applyPermissionsUI(); renderTable(); renderExpenses(); renderSalami();
     }, () => {}));
@@ -2052,7 +2524,7 @@ function fbAdd(col, data){
     atMs: Date.now(), at: firebase.firestore.FieldValue.serverTimestamp()
   });
   // await nahi kiya: internet na ho to bhi entry foran nazar aaye aur baad mein sync ho jaye
-  FB.db.collection(col).add(rec).catch(e => alert("محفوظ نہیں ہو سکا: " + fbErr(e)));
+  FB.db.collection(col).add(rec).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
 }
 
 /* Daig settings online save (sirf jis ko ijazat ho) */
@@ -2064,7 +2536,7 @@ function daigSettingChanged(){
     const num = id => { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; };
     FB.db.collection("config").doc("main").set({
       perDaig: num("basePeoplePerDaig"), daigWeight: num("daigWeightKg"), daigCost: num("daigCostPrice")
-    }, { merge:true }).catch(e => alert("محفوظ نہیں ہو سکا: " + fbErr(e)));
+    }, { merge:true }).catch(e => alert(L("محفوظ نہیں ہو سکا: ", "Could not save: ") + fbErr(e)));
   }, 700);
 }
 ["basePeoplePerDaig","daigWeightKg","daigCostPrice"].forEach(id => document.getElementById(id).addEventListener("input", daigSettingChanged));
@@ -2093,9 +2565,10 @@ function applyPermissionsUI(){
   let msg = document.getElementById("noAccessMsg");
   if(noneAllowed && !msg){
     msg = document.createElement("div"); msg.id = "noAccessMsg"; msg.className = "no-access";
-    msg.textContent = "ایڈمن نے ابھی آپ کو کسی چیز کی اجازت نہیں دی";
+    msg.textContent = L("ایڈمن نے ابھی آپ کو کسی چیز کی اجازت نہیں دی", "The admin hasn't given you any permission yet");
     document.querySelector("#homePage .dashboard").appendChild(msg);
   } else if(!noneAllowed && msg) msg.remove();
+  if(noneAllowed && msg) msg.textContent = L("ایڈمن نے ابھی آپ کو کسی چیز کی اجازت نہیں دی", "The admin hasn't given you any permission yet");
   // jo page ab allowed nahi us se hata do
   const cur = [...document.querySelectorAll(".page")].find(p => p.style.display !== "none");
   if(cur && !pageAllowed(cur.id)) showPage("homePage");
@@ -2116,9 +2589,9 @@ function lgMsg(t, ok){ const m = document.getElementById("lgMsg"); m.textContent
 
 async function doLogin(){
   const pin = document.getElementById("lgPin").value.trim();
-  if(!pin){ lgMsg("PIN ڈالیں"); return; }
-  if(!/^\d{6,}$/.test(pin)){ lgMsg("PIN غلط ہے"); return; }
-  const b = document.getElementById("lgBtn"); b.disabled = true; lgMsg("…چیک ہو رہا ہے", true);
+  if(!pin){ lgMsg(L("PIN ڈالیں", "Enter PIN")); return; }
+  if(!/^\d{6,}$/.test(pin)){ lgMsg(L("PIN غلط ہے", "Wrong PIN")); return; }
+  const b = document.getElementById("lgBtn"); b.disabled = true; lgMsg(L("…چیک ہو رہا ہے", "Checking…"), true);
   try { await FB.auth.signInWithEmailAndPassword(pinEmail(pin), pin); document.getElementById("lgPin").value = ""; }
   catch(e){ lgMsg(fbErr(e)); }
   b.disabled = false;
@@ -2128,15 +2601,15 @@ async function setupAdmin(){
   const name = document.getElementById("suName").value.trim();
   const pin = document.getElementById("suPin").value.trim();
   const pin2 = document.getElementById("suPin2").value.trim();
-  if(!name || !pin){ lgMsg("سب خانے بھریں"); return; }
-  if(!/^\d{6,}$/.test(pin)){ lgMsg("PIN کم از کم 6 ہندسوں کا ہو"); return; }
-  if(pin !== pin2){ lgMsg("دونوں PIN ایک جیسے نہیں"); return; }
-  const b = document.getElementById("suBtn"); b.disabled = true; lgMsg("…اکاؤنٹ بن رہا ہے", true);
+  if(!name || !pin){ lgMsg(L("سب خانے بھریں", "Fill in all fields")); return; }
+  if(!/^\d{6,}$/.test(pin)){ lgMsg(L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits")); return; }
+  if(pin !== pin2){ lgMsg(L("دونوں PIN ایک جیسے نہیں", "The two PINs don't match")); return; }
+  const b = document.getElementById("suBtn"); b.disabled = true; lgMsg(L("…اکاؤنٹ بن رہا ہے", "Creating account…"), true);
   try{
     const cred = await FB.auth.createUserWithEmailAndPassword(pinEmail(pin), pin);
     const uid = cred.user.uid;
     await FB.db.collection("config").doc("main").set({
-      adminUid: uid, title: getTitle(),
+      adminUid: uid, title: getTitleUr(), titleEn: getTitleEn() || null,
       perDaig: parseFloat(document.getElementById("basePeoplePerDaig").value) || 80,
       daigWeight: parseFloat(document.getElementById("daigWeightKg").value) || 10,
       daigCost: parseFloat(document.getElementById("daigCostPrice").value) || null
@@ -2149,7 +2622,7 @@ async function setupAdmin(){
 }
 
 function fbLogout(){
-  if(!confirm("لاگ آؤٹ کریں؟")) return;
+  if(!confirm(L("لاگ آؤٹ کریں؟", "Log out?"))) return;
   FB.auth.signOut();
 }
 
@@ -2160,9 +2633,9 @@ async function createUserAccount(){
   const name = document.getElementById("nuNameUrduPreview").innerText.trim() || document.getElementById("nuName").value.trim();
   const pin = document.getElementById("nuPin").value.trim();
   const perms = {}; PERM_KEYS.forEach(k => perms[k] = document.getElementById("nuP_" + k).checked);
-  if(!name || !pin){ alert("نام اور PIN دونوں ڈالیں"); return; }
-  if(!/^\d{6,}$/.test(pin)){ alert("PIN کم از کم 6 ہندسوں کا ہو"); return; }
-  if(!PERM_KEYS.some(k => perms[k])){ alert("کم از کم ایک اجازت منتخب کریں"); return; }
+  if(!name || !pin){ alert(L("نام اور PIN دونوں ڈالیں", "Enter both name and PIN")); return; }
+  if(!/^\d{6,}$/.test(pin)){ alert(L("PIN کم از کم 6 ہندسوں کا ہو", "PIN must be at least 6 digits")); return; }
+  if(!PERM_KEYS.some(k => perms[k])){ alert(L("کم از کم ایک اجازت منتخب کریں", "Select at least one permission")); return; }
   const b = document.getElementById("nuBtn"); b.disabled = true;
   try{
     // doosri Firebase app taake admin khud logout na ho
@@ -2170,7 +2643,7 @@ async function createUserAccount(){
     const cred = await sec.auth().createUserWithEmailAndPassword(pinEmail(pin), pin);
     await FB.db.collection("users").doc(cred.user.uid).set({ name, role: "user", perms });
     await sec.auth().signOut();
-    alert("✔ صارف بن گیا\nنام: " + name + "\nPIN: " + pin + "\nیہ PIN اسے بتا دیں");
+    alert(L("✔ صارف بن گیا\nنام: ", "✔ User created\nName: ") + name + "\nPIN: " + pin + L("\nیہ PIN اسے بتا دیں", "\nTell them this PIN"));
     ["nuName","nuPin"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("nuNameUrduPreview").innerText = "";
     PERM_KEYS.forEach(k => document.getElementById("nuP_" + k).checked = false);
@@ -2181,12 +2654,12 @@ async function createUserAccount(){
 function renderUsers(){
   const tb = document.getElementById("usersTable"); if(!tb) return;
   const list = FB.users.filter(x => x.role !== "admin");
-  if(!list.length){ tb.innerHTML = `<tr><td colspan="7">ابھی کوئی صارف نہیں</td></tr>`; return; }
+  if(!list.length){ tb.innerHTML = `<tr><td colspan="7">${L("ابھی کوئی صارف نہیں","No users yet")}</td></tr>`; return; }
   tb.innerHTML = list.map((x,i) => `
     <tr>
       <td><b class="nm nm${i % 6}">${x.name}</b></td>
       ${PERM_KEYS.map(k => `<td><input type="checkbox" ${x.perms && x.perms[k] ? "checked" : ""} onchange="setUserPerm('${x.uid}','${k}',this.checked)"></td>`).join("")}
-      <td><button class="btn-danger" onclick="removeUser('${x.uid}')">ختم کریں</button></td>
+      <td><button class="btn-danger" onclick="removeUser('${x.uid}')">${L("ختم کریں","Remove")}</button></td>
     </tr>`).join("");
 }
 function setUserPerm(uid, key, val){
@@ -2194,7 +2667,7 @@ function setUserPerm(uid, key, val){
   FB.db.collection("users").doc(uid).update(upd).catch(e => alert(fbErr(e)));
 }
 function removeUser(uid){
-  if(!confirm("اس صارف کی رسائی ختم کریں؟ وہ دوبارہ داخل نہیں ہو سکے گا۔")) return;
+  if(!confirm(L("اس صارف کی رسائی ختم کریں؟ وہ دوبارہ داخل نہیں ہو سکے گا۔", "Remove this user's access? They will not be able to sign in again."))) return;
   FB.db.collection("users").doc(uid).delete().catch(e => alert(fbErr(e)));
 }
 
@@ -2209,26 +2682,69 @@ function localBackup(){
 function updateMigrateInfo(){
   const { h, e, s } = localBackup();
   const info = document.getElementById("migrateInfo");
-  if(info) info.textContent = `اس ڈیوائس میں پرانا ڈیٹا: ${h.length} گھرانے، ${e.length} اخراجات، ${s.length} سلامی۔ ایک ہی بار بھیجیں، ورنہ ڈبل ہو جائیں گے۔`;
+  if(info) info.textContent = L(`اس ڈیوائس میں پرانا ڈیٹا: ${h.length} گھرانے، ${e.length} اخراجات، ${s.length} سلامی۔ ایک ہی بار بھیجیں، ورنہ ڈبل ہو جائیں گے۔`, `Old data on this device: ${h.length} households, ${e.length} expenses, ${s.length} salami. Send only once, otherwise it will be duplicated.`);
 }
 async function migrateLocalData(){
   if(!FB.isAdmin) return;
   const { h, e, s } = localBackup();
-  if(!h.length && !e.length && !s.length){ alert("اس ڈیوائس میں کوئی پرانا ڈیٹا نہیں"); return; }
-  if(localStorage.getItem("sadiq_wedding_migrated_v1") && !confirm("یہ ڈیٹا پہلے بھیجا جا چکا ہے۔ دوبارہ بھیجیں؟ (ڈبل ہو جائے گا)")) return;
-  if(!confirm(`${h.length} گھرانے، ${e.length} اخراجات اور ${s.length} سلامی آن لائن بھیجیں؟`)) return;
+  if(!h.length && !e.length && !s.length){ alert(L("اس ڈیوائس میں کوئی پرانا ڈیٹا نہیں", "No old data on this device")); return; }
+  if(localStorage.getItem("sadiq_wedding_migrated_v1") && !confirm(L("یہ ڈیٹا پہلے بھیجا جا چکا ہے۔ دوبارہ بھیجیں؟ (ڈبل ہو جائے گا)", "This data was already sent. Send again? (it will be duplicated)"))) return;
+  if(!confirm(L(`${h.length} گھرانے، ${e.length} اخراجات اور ${s.length} سلامی آن لائن بھیجیں؟`, `Send ${h.length} households, ${e.length} expenses and ${s.length} salami entries online?`))) return;
   h.forEach(x => fbAdd("houses", { owner:x.owner, address:x.address||"", people:Number(x.people)||0, note:x.note||"" }));
   e.forEach(x => fbAdd("expenses", { date:x.date, time:x.time||"", category:x.category, amount:Number(x.amount)||0, detail:x.detail||"" }));
   s.forEach(x => fbAdd("salami", { name:x.name, address:x.address||"", amount:Number(x.amount)||0, gift:x.gift||"" }));
   try { localStorage.setItem("sadiq_wedding_migrated_v1", "1"); } catch(x){}
-  alert("✔ پرانا ڈیٹا بھیج دیا گیا");
+  alert(L("✔ پرانا ڈیٹا بھیج دیا گیا", "✔ Old data sent"));
+}
+
+/* ================= CONTACT US =================
+   Apna WhatsApp number, phone aur email yahan likhein:
+   whatsapp: country code ke saath, + ke baghair, e.g. "923001234567"
+   phone:    e.g. "+923001234567"
+   email:    e.g. "support@example.com"
+   Jo khaali chhorein, us ka button nazar nahi aayega (WhatsApp ka button hamesha rahega). */
+const CONTACT = {
+  whatsapp: "",
+  phone: "",
+  email: ""
+};
+function contactText(){
+  const name = document.getElementById("ctName").value.trim();
+  const msg = document.getElementById("ctMsg").value.trim();
+  let t = L("السلام علیکم! ", "Assalam o Alaikum! ") + getTitle() + L(" ایپ کے بارے میں:", " app:");
+  if(name) t += "\n" + L("نام: ", "Name: ") + name;
+  if(msg) t += "\n" + msg;
+  return t;
+}
+function contactWhatsApp(){
+  const n = String(CONTACT.whatsapp || "").replace(/\D/g, "");
+  if(!n){ alert(L("رابطہ نمبر ابھی سیٹ نہیں ہوا", "Contact number is not set yet")); return; }
+  window.open("https://wa.me/" + n + "?text=" + encodeURIComponent(contactText()), "_blank");
+}
+function contactCall(){
+  const n = String(CONTACT.phone || "").replace(/[^\d+]/g, "");
+  if(!n){ alert(L("رابطہ نمبر ابھی سیٹ نہیں ہوا", "Contact number is not set yet")); return; }
+  window.location.href = "tel:" + n;
+}
+function contactEmail(){
+  const e = String(CONTACT.email || "").trim();
+  if(!e){ alert(L("ای میل ابھی سیٹ نہیں ہوئی", "Email is not set yet")); return; }
+  window.location.href = "mailto:" + e + "?subject=" + encodeURIComponent(getTitle()) + "&body=" + encodeURIComponent(contactText());
+}
+function applyContactButtons(){
+  document.getElementById("ctCallBtn").style.display = CONTACT.phone ? "" : "none";
+  document.getElementById("ctEmailBtn").style.display = CONTACT.email ? "" : "none";
 }
 
 // Initial setup
 if(USE_FIREBASE){ houses = []; expenses = []; salamis = []; }
+collectI18n();
+applyLanguage();
+applyContactButtons();
 applyTitle();
 document.getElementById("expDate").value = new Date().toISOString().split('T')[0];
 updateAutoTime();
+loadBachat();
 renderTable();
 renderExpenses();
 renderSalami();
